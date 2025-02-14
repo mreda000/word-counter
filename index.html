@@ -110,7 +110,7 @@
 <body>
     <div class="container">
         <div class="left">
-            <h1>Count My Words!</h1>
+            <h1>Text Analysis Tool</h1>
             <input type="text" id="urlInput" placeholder="Enter URL here..." />
             <button onclick="fetchTextFromURL()">Fetch & Analyze</button>
             <textarea id="textInput" placeholder="Type or paste your text here..." oninput="analyzeText()"></textarea>
@@ -129,9 +129,28 @@
     <div class="footer">
         <p><a href="about.html">About Us</a> | <a href="privacy.html">Privacy Policy</a></p>
     </div>
+
+    <script>
+        function analyzeText() {
+            let text = document.getElementById("textInput").value;
+            let words = text.trim().split(/\s+/).filter(word => word.length > 0);
+            let numbers = text.match(/\b\d+\b/g) || [];
+            let characters = text.length;
+            let sentences = text.split(/[.!?]+/).filter(sentence => sentence.trim().length > 0);
+            let paragraphs = text.split(/\n+/).filter(paragraph => paragraph.trim().length > 0);
+            let readingLevel = Math.round((words.length / sentences.length) + (sentences.length / paragraphs.length)) || 0;
+            let readingTime = Math.round(words.length / 200);
+            let speakingTime = Math.round(words.length / 130);
+            
+            document.getElementById("wordCount").textContent = words.length;
+            document.getElementById("numberCount").textContent = numbers.length;
+            document.getElementById("charCount").textContent = characters;
+            document.getElementById("sentenceCount").textContent = sentences.length;
+            document.getElementById("paragraphCount").textContent = paragraphs.length;
+            document.getElementById("readingLevel").textContent = readingLevel;
+            document.getElementById("readingTime").textContent = readingTime;
+            document.getElementById("speakingTime").textContent = speakingTime;
+        }
+    </script>
 </body>
 </html>
-
-
-
-
