@@ -98,7 +98,7 @@
             margin-left: 10px; /* Space from content */
         }
         .menu-toggle:hover {
-            color: #ffcc00; /* Yellow for contrast, removed rotation */
+            color: #ffcc00; /* Yellow for contrast, no rotation */
         }
         /* Mobile Nav (Slide-Out Menu) */
         @media (max-width: 600px) {
@@ -131,6 +131,7 @@
                 padding: 60px 20px 20px; /* More padding for readability */
                 box-shadow: 4px 0 15px rgba(0, 0, 0, 0.3); /* Shadow for depth */
                 transition: left 0.5s ease-out; /* Smooth slide-in */
+                z-index: 1000; /* Ensure it stays below menu-toggle */
             }
             .nav-links.active {
                 display: flex;
@@ -495,6 +496,8 @@ Speaking Time: ${document.getElementById("speakingTime").textContent} sec
         function toggleMenu() {
             const navLinks = document.querySelector(".nav-links");
             navLinks.classList.toggle("active");
+            // Ensure body doesn't scroll when menu is open
+            document.body.classList.toggle("no-scroll", navLinks.classList.contains("active"));
         }
 
         document.getElementById("textInput").addEventListener("input", debounce(analyzeText, 300));
