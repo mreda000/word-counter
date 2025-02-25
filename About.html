@@ -3,58 +3,239 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us</title>
+    <meta name="description" content="Learn about Count My Words, our mission to help writers with free, accurate text analysis tools, and why we’re the top choice for word counting.">
+    <meta name="keywords" content="about count my words, word count tool, text analysis, writing tools, improve writing">
+    <title>About Us - Count My Words</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 40px;
-            background-color: #f5f5f7;
-            color: #1d1d1f;
-            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #1d1d1f; /* Dark mode default */
+            color: #f5f5f7;
+            line-height: 1.6;
+            overflow-x: hidden;
         }
-        .container {
-            background: white;
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #003087;
+            color: white;
+            padding: 15px 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .toolbar a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 20px;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        .toolbar a:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            transform: scale(1.05);
+        }
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+        .menu-toggle {
+            display: none;
+            font-size: 28px;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        .hero-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1s ease-in;
+            margin-top: 70px;
+        }
+        .about-container {
+            background: #2c2c2e;
             padding: 40px;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            max-width: 800px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            width: 100%;
+            max-width: 900px;
+            margin: -100px auto 40px;
+            position: relative;
+            z-index: 10;
+            animation: slideUp 0.8s ease-out;
         }
-        h1 {
-            font-size: 32px;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-        a {
-            text-decoration: none;
+        .about-content h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin: 0 0 20px 0;
             color: #007AFF;
-            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1.2s ease-in;
+        }
+        .about-content h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 30px 0 15px 0;
+            color: #007AFF;
+            animation: fadeIn 1.4s ease-in;
+        }
+        .about-content p {
+            font-size: 18px;
+            margin: 0 0 20px 0;
+            animation: fadeIn 1.6s ease-in;
+        }
+        .about-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+        }
+        .about-content li {
+            font-size: 18px;
+            margin: 10px 0;
+            position: relative;
+            padding-left: 20px;
+        }
+        .about-content li:before {
+            content: "✓";
+            color: #007AFF;
+            position: absolute;
+            left: 0;
+        }
+        .about-content a {
+            color: #007AFF;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .about-content a:hover {
+            color: #ffcc00;
+        }
+        .footer {
+            padding: 20px;
+            width: 100%;
+            background: #003087;
+            color: white;
+            text-align: center;
+            font-size: 16px;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .footer a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0 15px;
+            transition: color 0.3s ease;
+        }
+        .footer a:hover {
+            color: #ffcc00;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @media (max-width: 600px) {
+            .hero-image { height: 250px; }
+            .about-container { 
+                padding: 20px; 
+                margin: -60px auto 20px; 
+                max-width: 95%; 
+            }
+            .about-content h1 { font-size: 28px; }
+            .about-content h2 { font-size: 20px; }
+            .about-content p, .about-content li { font-size: 16px; }
+            .menu-toggle { display: block; }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background-color: #003087;
+                padding: 15px 0;
+            }
+            .nav-links.active { display: flex; }
+            .toolbar a { padding: 12px 20px; }
+        }
+        @media (max-width: 400px) {
+            .hero-image { height: 200px; }
+            .about-container { padding: 15px; }
+            .about-content h1 { font-size: 24px; }
+            .about-content h2 { font-size: 18px; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>About Us</h1>
-        <p>Welcome to Count My Words! We are dedicated to providing an easy-to-use and efficient tool for word, character, and text analysis.</p>
-        
-        <h2>Our Mission</h2>
-        <p>Our mission is to help writers, students, and professionals optimize their content with accurate text analysis, ensuring efficiency and productivity.</p>
-        
-        <h2>Why Choose Us?</h2>
-        <ul>
-            <li>Simple and intuitive design for seamless user experience.</li>
-            <li>Accurate word, character, and reading time analysis.</li>
-            <li>Completely free and easy to use.</li>
-        </ul>
-        
-        <h2>Contact Us</h2>
-        <p>If you have any questions or feedback, feel free to reach out to us:</p>
-        <p>Email: countmywords.com@gmail.com</p>
-        
-        <p><a href="index.html">Back to Home</a></p>
+    <nav>
+        <div class="toolbar">
+            <a href="index.html">Count My Words</a>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="blog.html">Blog</a>
+            </div>
+        </div>
+    </nav>
+
+    <img src="https://images.pexels.com/photos/256468/pexels-photo-256468.jpeg?auto=compress&cs=tinysrgb&w=1974&h=400&fit=crop" alt="Team working together" class="hero-image">
+
+    <div class="about-container">
+        <div class="about-content">
+            <h1>About Us</h1>
+            <p>Welcome to Count My Words, your go-to destination for a powerful, free word count tool and text analysis. We’re passionate about helping writers, students, bloggers, and professionals optimize their content with accurate, user-friendly tools. Whether you’re crafting an essay, polishing a blog post, or timing a speech, our platform makes it easy to analyze words, characters, reading levels, and more—right at your fingertips.</p>
+            
+            <h2>Our Mission</h2>
+            <p>Our mission is to empower everyone to improve their writing and communication skills through innovative, accessible tools. At Count My Words, we believe that clear, concise content can transform ideas into impact. By offering features like URL text fetching, reading time estimates, and speaking time calculations, we aim to boost productivity and creativity, all while keeping it completely free and intuitive. We’re here to support your writing journey, one word at a time.</p>
+            
+            <h2>Why Choose Us?</h2>
+            <ul>
+                <li>Seamless, intuitive design for an effortless user experience.</li>
+                <li>Advanced text analysis, including word counts, reading levels, and speech timing.</li>
+                <li>Free access with no hidden fees—perfect for students, writers, and pros alike.</li>
+                <li>Mobile-friendly and dark mode-ready for convenience anytime, anywhere.</li>
+            </ul>
+            
+            <h2>Our Story</h2>
+            <p>Count My Words started as a passion project for a group of writers frustrated by clunky word-counting tools. We launched in 2025, driven by the idea that everyone deserves a simple way to analyze and refine their text. Today, we’re growing, adding features like URL fetching and blog tips, all while staying true to our roots—helping you write better, faster, and smarter. Check out our <a href="blog.html">blog</a> for more insights!</p>
+            
+            <h2>Contact Us</h2>
+            <p>We’d love to hear from you! Have questions, suggestions, or feedback? Reach out anytime:</p>
+            <p>Email: countmywords.com@gmail.com</p>
+            <p>Or visit our <a href="privacy.html">Privacy Policy</a> for more on how we handle your data.</p>
+            
+            <p><a href="index.html">Back to Home</a></p>
+        </div>
     </div>
+
+    <div class="footer">
+        <p><a href="About.html">About Us</a> | <a href="privacy.html">Privacy Policy</a></p>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.querySelector(".nav-links");
+            navLinks.classList.toggle("active");
+        }
+    </script>
 </body>
 </html>
