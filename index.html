@@ -33,14 +33,14 @@
             width: 100%;
             background-color: #003087;
             color: white;
-            padding: 12px 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            padding: 8px 20px; /* Thinner padding for a sleek look on desktop */
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15); /* Lighter shadow for thin look */
             z-index: 1000;
             animation: slideDown 0.8s ease-out;
         }
         .toolbar {
             display: flex;
-            justify-content: space-between; /* Default desktop: space between items */
+            justify-content: space-between; /* Space between logo and links on desktop */
             align-items: center;
             max-width: 1200px;
             margin: 0 auto;
@@ -50,11 +50,11 @@
             color: white;
             text-decoration: none;
             font-weight: 600;
-            padding: 10px 18px;
+            padding: 8px 16px; /* Slightly smaller padding for thinner look */
             transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-            border-radius: 6px;
+            border-radius: 4px; /* Smaller radius for a sharper, thinner appearance */
             position: relative;
-            font-size: 16px;
+            font-size: 14px; /* Slightly smaller font for thinner bar */
         }
         .toolbar a:hover {
             background-color: rgba(255, 255, 255, 0.1);
@@ -79,7 +79,7 @@
         }
         .nav-links {
             display: flex;
-            gap: 15px;
+            gap: 10px;
         }
         .menu-toggle {
             display: none; /* Hidden by default on desktop */
@@ -88,7 +88,7 @@
             border: none;
             color: white;
             cursor: pointer;
-            padding: 8px;
+            padding: 6px;
             transition: transform 0.3s ease, color 0.3s ease;
             min-height: 44px;
             min-width: 44px;
@@ -107,7 +107,7 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
-            margin: 80px auto 20px;
+            margin: 60px auto 20px; /* Adjusted for thinner nav */
             position: relative;
             animation: slideUp 1s ease-out;
             border: 2px solid transparent;
@@ -273,40 +273,36 @@
         /* Mobile Adjustments */
         @media (max-width: 600px) {
             nav {
-                padding: 10px 15px;
-                background: none;
-                box-shadow: none;
-            }
-            .toolbar {
-                justify-content: flex-start;
+                display: none; /* Completely hide nav bar on mobile */
             }
             .menu-toggle {
                 display: block;
-                order: -1;
+                position: fixed;
+                top: 10px;
+                left: 10px;
+                z-index: 1001;
             }
             .nav-links {
                 display: none;
                 flex-direction: column;
                 position: fixed;
                 top: 0;
-                left: 0;
+                left: -200px; /* Start off-screen */
                 width: 200px;
                 height: 100vh;
                 background-color: #003087;
                 padding: 60px 20px 20px;
                 box-shadow: 4px 0 15px rgba(0, 0, 0, 0.3);
-                animation: slideIn 0.5s ease-out;
+                transition: left 0.5s ease-out; /* Smooth slide-in */
             }
             .nav-links.active {
                 display: flex;
-            }
-            .toolbar a[href="index.html"] {
-                display: none;
+                left: 0; /* Slide in from left */
             }
             .container {
                 padding: 15px;
                 max-width: 90%;
-                margin: 20px auto 15px;
+                margin: 10px auto 15px; /* Adjusted for no nav bar */
             }
             h1 { font-size: 24px; }
             .counter { font-size: 14px; padding: 8px; }
@@ -320,18 +316,13 @@
             .counter { font-size: 12px; padding: 6px; }
             button { padding: 8px; font-size: 12px; }
             textarea, input { font-size: 12px; padding: 8px; }
-            .menu-toggle { font-size: 24px; padding: 6px; }
-        }
-        @keyframes slideIn {
-            from { transform: translateX(-100%); }
-            to { transform: translateX(0); }
+            .menu-toggle { font-size: 24px; padding: 4px; }
         }
     </style>
 </head>
 <body>
     <nav>
         <div class="toolbar">
-            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
             <a href="index.html">Count My Words</a>
             <div class="nav-links">
                 <a href="index.html">Home</a>
@@ -339,6 +330,7 @@
                 <a href="how-to-use.html">How to Use</a>
                 <a href="faq.html">FAQ</a>
             </div>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
         </div>
     </nav>
 
@@ -354,7 +346,7 @@
                     particlesDiv.appendChild(particle);
                 }
             }
-            createParticles(30);
+            createParticles(30); // Reinstated with 30 particles for a cool effect
         </script>
     </div>
 
