@@ -21,12 +21,53 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             min-height: 100vh;
             background-color: #f5f5f7;
             color: #1d1d1f;
             padding: 20px;
+            margin-top: 60px;
             transition: background-color 0.3s, color 0.3s;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #007AFF;
+            color: white;
+            padding: 10px 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .toolbar a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            transition: background 0.3s;
+        }
+        .toolbar a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 10px;
+        }
+        .menu-toggle {
+            display: none;
+            font-size: 24px;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
         }
         .container {
             background: white;
@@ -41,12 +82,23 @@
         }
         .left, .right { width: 100%; }
         h1 { font-size: 24px; font-weight: 600; text-align: center; }
-        textarea, input {
+        textarea {
             width: calc(100% - 20px);
             padding: 10px;
             border: 1px solid #d2d2d7;
             border-radius: 8px;
             font-size: 14px;
+            outline: none;
+            transition: border 0.3s ease-in-out;
+            min-height: 150px;
+            resize: vertical;
+        }
+        input {
+            width: calc(100% - 20px);
+            padding: 12px;
+            border: 1px solid #d2d2d7;
+            border-radius: 8px;
+            font-size: 16px;
             outline: none;
             transition: border 0.3s ease-in-out;
         }
@@ -61,6 +113,8 @@
             cursor: pointer;
             font-size: 14px;
             transition: background 0.3s ease-in-out;
+            margin: 5px 0;
+            min-height: 44px;
         }
         button:hover { background-color: #005ecb; }
         button:disabled { background-color: #ccc; cursor: not-allowed; }
@@ -96,22 +150,57 @@
         .dark-mode { background-color: #1d1d1f; color: #f5f5f7; }
         .dark-mode .container { background: #2c2c2e; }
         .dark-mode .counter { background: #3a3a3c; }
+        .dark-mode nav { background-color: #003087; }
         @media (max-width: 600px) {
-            .container { padding: 15px; max-width: 90%; }
-            h1 { font-size: 22px; }
-            .counter { font-size: 12px; padding: 5px; }
+            .container { padding: 10px; max-width: 95%; }
+            h1 { font-size: 20px; }
+            .counter { font-size: 12px; padding: 4px; }
+            button { font-size: 13px; }
+            textarea, input { font-size: 14px; }
+            .menu-toggle { display: block; }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 50px;
+                left: 0;
+                width: 100%;
+                background-color: #007AFF;
+                padding: 10px 0;
+            }
+            .nav-links.active { display: flex; }
+            .toolbar a { padding: 12px 20px; }
+        }
+        @media (max-width: 400px) {
+            .container { padding: 8px; }
+            h1 { font-size: 18px; }
+            button { padding: 8px; }
         }
     </style>
 </head>
-<body>
+<body class="dark-mode"> <!-- Dark mode enabled by default -->
+    <nav>
+        <div class="toolbar">
+            <a href="index.html">Count My Words</a>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="blog.html">Blog</a>
+            </div>
+        </div>
+    </nav>
+
     <div class="container">
         <div class="left">
             <h1>Count My Words!</h1>
             <input type="text" id="urlInput" placeholder="Enter URL here..." />
-            <button onclick="fetchTextFromURL()" id="fetchBtn">Fetch & Analyze</button>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button onclick="fetchTextFromURL()" id="fetchBtn">Fetch & Analyze</button>
+                <button onclick="clearText()" style="background-color: #ff3b30">Clear</button>
+                <button onclick="copyResults()">Copy Results</button>
+            </div>
             <textarea id="textInput" placeholder="Type or paste your text here..."></textarea>
-            <button onclick="clearText()" style="background-color: #ff3b30">Clear</button>
-            <button onclick="copyResults()">Copy Results</button>
+            <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
         </div>
         <div class="right">
             <p class="counter">📖 Word Count: <span id="wordCount">0</span></p>
@@ -123,14 +212,12 @@
             <p class="counter">⏳ Reading Time (sec): <span id="readingTime">0</span></p>
             <p class="counter">🗣️ Speaking Time (sec): <span id="speakingTime">0</span></p>
         </div>
-        <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
     </div>
     <div class="footer">
         <p><a href="About.html">About Us</a> | <a href="privacy.html">Privacy Policy</a></p>
     </div>
 
     <script>
-        // Debounce utility to limit function calls
         function debounce(func, wait) {
             let timeout;
             return function (...args) {
@@ -139,7 +226,6 @@
             };
         }
 
-        // Analyze text and update counters
         function analyzeText() {
             const text = document.getElementById("textInput").value;
             const words = text.trim().split(/\s+/).filter(word => word.length > 0);
@@ -147,11 +233,9 @@
             const characters = text.length;
             const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0);
             const paragraphs = text.split(/\n+/).filter(p => p.trim().length > 0);
-
-            // Flesch-Kincaid Grade Level (simplified)
             const readingLevel = text.trim() ? Math.round(0.39 * (words.length / sentences.length) + 11.8 * (syllables(text) / words.length) - 15.59) : "N/A";
-            const readingTime = Math.round(words.length / 200); // 200 wpm
-            const speakingTime = Math.round(words.length / 130); // 130 wpm
+            const readingTime = Math.round(words.length / 200);
+            const speakingTime = Math.round(words.length / 130);
 
             document.getElementById("wordCount").textContent = words.length;
             document.getElementById("numberCount").textContent = numbers.length;
@@ -163,22 +247,18 @@
             document.getElementById("speakingTime").textContent = speakingTime;
         }
 
-        // Simple syllable counter (approximation)
         function syllables(text) {
             return text.toLowerCase().split(/\s+/).reduce((count, word) => {
                 return count + (word.match(/[aeiouy]+/g) || []).length || 1;
             }, 0);
         }
 
-        // Fetch text from URL
         async function fetchTextFromURL() {
             const url = document.getElementById("urlInput").value.trim();
             const fetchBtn = document.getElementById("fetchBtn");
             if (!url) return alert("Please enter a valid URL");
-
             fetchBtn.disabled = true;
             fetchBtn.textContent = "Fetching...";
-
             try {
                 const response = await fetch(url);
                 if (!response.ok) throw new Error("Failed to fetch URL");
@@ -193,13 +273,11 @@
             }
         }
 
-        // Clear text and reset counters
         function clearText() {
             document.getElementById("textInput").value = "";
             analyzeText();
         }
 
-        // Copy results to clipboard
         function copyResults() {
             const results = `
 Word Count: ${document.getElementById("wordCount").textContent}
@@ -214,12 +292,15 @@ Speaking Time: ${document.getElementById("speakingTime").textContent} sec
             navigator.clipboard.writeText(results).then(() => alert("Results copied to clipboard!"));
         }
 
-        // Toggle dark mode
         function toggleDarkMode() {
             document.body.classList.toggle("dark-mode");
         }
 
-        // Add event listeners
+        function toggleMenu() {
+            const navLinks = document.querySelector(".nav-links");
+            navLinks.classList.toggle("active");
+        }
+
         document.getElementById("textInput").addEventListener("input", debounce(analyzeText, 300));
     </script>
 </body>
