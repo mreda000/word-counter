@@ -9,25 +9,22 @@
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #f5f5f7;
-            color: #1d1d1f;
-            padding: 20px;
-            margin-top: 60px;
-            transition: background-color 0.3s, color 0.3s;
+            margin: 0;
+            padding: 0;
+            background-color: #1d1d1f; /* Dark mode default */
+            color: #f5f5f7;
+            line-height: 1.6;
+            overflow-x: hidden;
         }
         nav {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            background-color: #007AFF;
+            background-color: #003087;
             color: white;
-            padding: 10px 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             z-index: 1000;
         }
         .toolbar {
@@ -40,100 +37,128 @@
         .toolbar a {
             color: white;
             text-decoration: none;
-            font-weight: 500;
-            padding: 8px 16px;
-            transition: background 0.3s;
+            font-weight: 600;
+            padding: 10px 20px;
+            transition: background 0.3s ease, transform 0.2s ease;
         }
         .toolbar a:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 6px;
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            transform: scale(1.05);
         }
         .nav-links {
             display: flex;
-            gap: 10px;
+            gap: 15px;
         }
         .menu-toggle {
             display: none;
-            font-size: 24px;
+            font-size: 28px;
             background: none;
             border: none;
             color: white;
             cursor: pointer;
         }
-        .blog-container {
-            background: white;
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        .hero-image {
             width: 100%;
-            max-width: 800px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1s ease-in;
+            margin-top: 70px; /* Space for fixed nav */
+        }
+        .blog-container {
+            background: #2c2c2e;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            width: 100%;
+            max-width: 900px;
+            margin: -100px auto 40px; /* Overlap hero image */
+            position: relative;
+            z-index: 10;
+            animation: slideUp 0.8s ease-out;
         }
         .blog-post h1 {
-            font-size: 28px;
-            margin: 0 0 15px 0;
+            font-size: 36px;
+            font-weight: 700;
+            margin: 0 0 20px 0;
             color: #007AFF;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1.2s ease-in;
         }
         .blog-post p {
-            font-size: 16px;
-            line-height: 1.5;
-            margin: 0 0 10px 0;
+            font-size: 18px;
+            margin: 0 0 20px 0;
+            animation: fadeIn 1.5s ease-in;
         }
         .blog-post .date {
-            font-size: 14px;
-            color: #666;
-            margin-top: 5px;
+            font-size: 16px;
+            color: #aaa;
+            margin-top: 10px;
+            animation: fadeIn 1.8s ease-in;
         }
         .footer {
-            margin-top: 15px;
-            padding: 8px;
+            padding: 20px;
             width: 100%;
-            background: #007AFF;
+            background: #003087;
             color: white;
             text-align: center;
-            font-size: 14px;
-            border-radius: 8px;
+            font-size: 16px;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2);
         }
         .footer a {
             color: white;
             text-decoration: none;
-            font-weight: bold;
-            margin: 0 8px;
+            font-weight: 600;
+            margin: 0 15px;
+            transition: color 0.3s ease;
         }
         .footer a:hover {
-            text-decoration: underline;
+            color: #ffcc00;
         }
-        .dark-mode { background-color: #1d1d1f; color: #f5f5f7; }
-        .dark-mode .blog-container { background: #2c2c2e; }
-        .dark-mode nav { background-color: #003087; }
-        .dark-mode .blog-post .date { color: #aaa; }
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        /* Responsive Design */
         @media (max-width: 600px) {
-            .blog-container { padding: 10px; max-width: 95%; }
-            .blog-post h1 { font-size: 22px; }
-            .blog-post p { font-size: 14px; }
+            .hero-image { height: 250px; }
+            .blog-container { 
+                padding: 20px; 
+                margin: -60px auto 20px; 
+                max-width: 95%; 
+            }
+            .blog-post h1 { font-size: 28px; }
+            .blog-post p { font-size: 16px; }
             .menu-toggle { display: block; }
             .nav-links {
                 display: none;
                 flex-direction: column;
                 position: absolute;
-                top: 50px;
+                top: 60px;
                 left: 0;
                 width: 100%;
-                background-color: #007AFF;
-                padding: 10px 0;
+                background-color: #003087;
+                padding: 15px 0;
             }
             .nav-links.active { display: flex; }
             .toolbar a { padding: 12px 20px; }
         }
         @media (max-width: 400px) {
-            .blog-container { padding: 8px; }
-            .blog-post h1 { font-size: 18px; }
+            .hero-image { height: 200px; }
+            .blog-container { padding: 15px; }
+            .blog-post h1 { font-size: 24px; }
         }
     </style>
 </head>
-<body class="dark-mode">
+<body>
     <nav>
         <div class="toolbar">
             <a href="index.html">Count My Words</a>
@@ -145,11 +170,13 @@
         </div>
     </nav>
 
+    <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1973&auto=format&fit=crop" alt="Person writing at a desk" class="hero-image">
+
     <div class="blog-container">
         <div class="blog-post">
             <h1>The Power of Word Count in Everyday Writing</h1>
-            <p>I’ve always found word count to be more than just a number—it’s like a secret weapon for anyone who writes. Whether I’m banging out an email to my boss, crafting a Twitter thread, or helping my kid with a school essay, knowing the word count keeps me in check. Too long, and I risk losing people; too short, and I might not say enough. That’s where a solid word count tool like Count My Words comes in handy—it’s instant, accurate, and honestly kind of fun to use.</p>
-            <p>For example, I recently wrote a 500-word blog post and used the tool to trim it down to 400. It forced me to cut fluff and focus on what mattered. Search engines love that kind of concise, valuable content too—posts between 300 and 600 words often rank better because they’re digestible. Plus, it’s not just about length; pairing word count with text analysis (like sentence length or reading time) helps me improve writing across the board. Next time you’re drafting anything, give it a go—set a word goal and watch how it sharpens your focus!</p>
+            <p>I’ve always found word count to be more than just a number—it’s like a secret weapon for anyone who writes. Whether I’m banging out an email to my boss, crafting a Twitter thread, or helping my kid with a school essay, knowing the word count keeps me in check. Too long, and I risk losing people; too short, and I might not say enough. That’s where a solid word count tool like Count My Words comes in handy—it’s instant, accurate, and honestly kind of fun to use. I mean, who doesn’t love seeing those stats tick up as you type?</p>
+            <p>For example, I recently wrote a 500-word blog post and used the tool to trim it down to 400. It forced me to cut fluff—like those sneaky “very” and “just” words I overuse—and focus on what mattered. Search engines love that kind of concise, valuable content too—posts between 300 and 600 words often rank better because they’re digestible. Plus, it’s not just about length; pairing word count with text analysis (like sentence length or reading time) helps me improve writing across the board. I’ve started aiming for 15-word sentences max, and the difference is night and day. Next time you’re drafting anything, give it a go—set a word goal and watch how it sharpens your focus! It’s like a mini workout for your brain.</p>
             <p class="date">Posted on February 25, 2025</p>
         </div>
     </div>
