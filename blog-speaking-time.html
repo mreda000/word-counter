@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Find out why speaking time matters for speeches and how a word count tool can perfect your delivery.">
+    <meta name="keywords" content="speech timing, word count tool, writing speeches, improve writing, presentation tips">
+    <title>Why Speaking Time Matters for Speeches - Count My Words</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1d1d1f;
+            color: #f5f5f7;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #003087;
+            color: white;
+            padding: 15px 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .toolbar a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 20px;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        .toolbar a:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            transform: scale(1.05);
+        }
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+        .menu-toggle {
+            display: none;
+            font-size: 28px;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        .hero-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1s ease-in;
+            margin-top: 70px;
+        }
+        .blog-container {
+            background: #2c2c2e;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            width: 100%;
+            max-width: 900px;
+            margin: -100px auto 40px;
+            position: relative;
+            z-index: 10;
+            animation: slideUp 0.8s ease-out;
+        }
+        .blog-post h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin: 0 0 20px 0;
+            color: #007AFF;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1.2s ease-in;
+        }
+        .blog-post p {
+            font-size: 18px;
+            margin: 0 0 20px 0;
+            animation: fadeIn 1.5s ease-in;
+        }
+        .blog-post .date {
+            font-size: 16px;
+            color: #aaa;
+            margin-top: 10px;
+            animation: fadeIn 1.8s ease-in;
+        }
+        .footer {
+            padding: 20px;
+            width: 100%;
+            background: #003087;
+            color: white;
+            text-align: center;
+            font-size: 16px;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .footer a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0 15px;
+            transition: color 0.3s ease;
+        }
+        .footer a:hover {
+            color: #ffcc00;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @media (max-width: 600px) {
+            .hero-image { height: 250px; }
+            .blog-container { 
+                padding: 20px; 
+                margin: -60px auto 20px; 
+                max-width: 95%; 
+            }
+            .blog-post h1 { font-size: 28px; }
+            .blog-post p { font-size: 16px; }
+            .menu-toggle { display: block; }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background-color: #003087;
+                padding: 15px 0;
+            }
+            .nav-links.active { display: flex; }
+            .toolbar a { padding: 12px 20px; }
+        }
+        @media (max-width: 400px) {
+            .hero-image { height: 200px; }
+            .blog-container { padding: 15px; }
+            .blog-post h1 { font-size: 24px; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="toolbar">
+            <a href="index.html">Count My Words</a>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="blog.html">Blog</a>
+            </div>
+        </div>
+    </nav>
+
+    <img src="https://images.unsplash.com/photo-1507149830262-8e585b705279?q=80&w=1974&auto=format&fit=crop" alt="Microphone on stage" class="hero-image">
+
+    <div class="blog-container">
+        <div class="blog-post">
+            <h1>Why Speaking Time Matters for Speeches</h1>
+            <p>Last month, I had to give a toast at my cousin’s wedding, and I swear, figuring out the timing was the hardest part. That’s when I realized how clutch a word count tool can be for speeches. Count My Words calculates speaking time at 130 words per minute—a pretty standard pace—and it’s been a lifesaver. A 300-word speech clocks in at about 2 minutes and 18 seconds, which was perfect for not rambling on while everyone’s waiting for cake. It’s all about keeping it tight and on point.</p>
+            <p>But it’s more than just weddings. Whether you’re prepping for a work presentation or a school debate, knowing your speaking time helps you pace it right. I’ve found that keeping speeches under 5 minutes (around 650 words) holds attention best—SEO tip: short, punchy content ranks well too if you post it online. I even tested a 400-word draft last week; it took 3 minutes flat, and trimming 50 words tightened it up without losing the heart. Next time you’re speaking, use this trick—it’s a stress-free way to nail your delivery!</p>
+            <p class="date">Posted on March 3, 2025</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p><a href="About.html">About Us</a> | <a href="privacy.html">Privacy Policy</a></p>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.querySelector(".nav-links");
+            navLinks.classList.toggle("active");
+        }
+    </script>
+</body>
+</html>
