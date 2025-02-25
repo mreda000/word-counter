@@ -3,73 +3,246 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy</title>
+    <meta name="description" content="Learn about Count My Words' Privacy Policy, how we protect your data, and our commitment to your privacy with our word count tool.">
+    <meta name="keywords" content="privacy policy, count my words, data protection, word count tool, online privacy">
+    <title>Privacy Policy - Count My Words</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 40px;
-            background-color: #f5f5f7;
-            color: #1d1d1f;
-            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #1d1d1f; /* Dark mode default */
+            color: #f5f5f7;
+            line-height: 1.6;
+            overflow-x: hidden;
         }
-        .container {
-            background: white;
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #003087;
+            color: white;
+            padding: 15px 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .toolbar a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 20px;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        .toolbar a:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            transform: scale(1.05);
+        }
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+        .menu-toggle {
+            display: none;
+            font-size: 28px;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        .hero-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1s ease-in;
+            margin-top: 70px;
+        }
+        .privacy-container {
+            background: #2c2c2e;
             padding: 40px;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            max-width: 800px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            width: 100%;
+            max-width: 900px;
+            margin: -100px auto 40px;
+            position: relative;
+            z-index: 10;
+            animation: slideUp 0.8s ease-out;
         }
-        h1 {
-            font-size: 32px;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-        a {
-            text-decoration: none;
+        .privacy-content h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin: 0 0 20px 0;
             color: #007AFF;
-            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1.2s ease-in;
+        }
+        .privacy-content h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 30px 0 15px 0;
+            color: #007AFF;
+            animation: fadeIn 1.4s ease-in;
+        }
+        .privacy-content p {
+            font-size: 18px;
+            margin: 0 0 20px 0;
+            animation: fadeIn 1.6s ease-in;
+        }
+        .privacy-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+        }
+        .privacy-content li {
+            font-size: 18px;
+            margin: 10px 0;
+            position: relative;
+            padding-left: 20px;
+        }
+        .privacy-content li:before {
+            content: "✓";
+            color: #007AFF;
+            position: absolute;
+            left: 0;
+        }
+        .privacy-content a {
+            color: #007AFF;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .privacy-content a:hover {
+            color: #ffcc00;
+        }
+        .footer {
+            padding: 20px;
+            width: 100%;
+            background: #003087;
+            color: white;
+            text-align: center;
+            font-size: 16px;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .footer a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0 15px;
+            transition: color 0.3s ease;
+        }
+        .footer a:hover {
+            color: #ffcc00;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @media (max-width: 600px) {
+            .hero-image { height: 250px; }
+            .privacy-container { 
+                padding: 20px; 
+                margin: -60px auto 20px; 
+                max-width: 95%; 
+            }
+            .privacy-content h1 { font-size: 28px; }
+            .privacy-content h2 { font-size: 20px; }
+            .privacy-content p, .privacy-content li { font-size: 16px; }
+            .menu-toggle { display: block; }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background-color: #003087;
+                padding: 15px 0;
+            }
+            .nav-links.active { display: flex; }
+            .toolbar a { padding: 12px 20px; }
+        }
+        @media (max-width: 400px) {
+            .hero-image { height: 200px; }
+            .privacy-container { padding: 15px; }
+            .privacy-content h1 { font-size: 24px; }
+            .privacy-content h2 { font-size: 18px; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Privacy Policy</h1>
-        <p>Effective Date: 2/13/25</p>
-        <p>Welcome to Count My Words! Your privacy is important to us. This Privacy Policy explains how we collect, use, and protect your personal information when you visit our website.</p>
-        
-        <h2>1. Information We Collect</h2>
-        <p>We may collect the following types of data:</p>
-        <ul>
-            <li>Non-personal information such as browser type, operating system, and website usage analytics.</li>
-            <li>Personal information (such as email addresses) only if you voluntarily submit it through contact forms or email subscriptions.</li>
-        </ul>
-        
-        <h2>2. Use of Cookies</h2>
-        <p>Our website uses cookies to enhance your browsing experience. These cookies may be used for analytics, ad targeting, and remembering user preferences. You can disable cookies through your browser settings.</p>
-        
-        <h2>3. Third-Party Advertisements</h2>
-        <p>FUTURE Integration: We use third-party advertising services such as Google AdSense. These services may collect data through cookies and similar technologies to provide personalized ads based on your interests
-DoubleClick Cookie: Google, as a third-party vendor, uses cookies to serve ads on our site. The use of the DoubleClick cookie enables Google to provide ads based on your visits to other websites on the Internet. You can opt-out of the use of the DoubleClick cookie by visiting the Google Ad Settings page.
-</p>
-        
-        <h2>4. Data Security</h2>
-        <p>We take appropriate security measures to protect your data; however, no online platform is completely secure. We encourage users to take precautions when sharing personal information online.</p>
-        
-        <h2>5. Links to External Sites</h2>
-        <p>Our website may contain links to third-party sites. We are not responsible for the privacy policies of external websites.</p>
-        
-        <h2>6. Updates to This Policy</h2>
-        <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page.</p>
-        
-        <h2>7. Contact Us</h2>
-        <p>If you have any questions regarding this Privacy Policy, you can contact us at:</p>
-        <p>Email: countmywords.com@gmail.com</p>
-        
-        <p><a href="index.html">Back to Home</a></p>
+    <nav>
+        <div class="toolbar">
+            <a href="index.html">Count My Words</a>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="blog.html">Blog</a>
+            </div>
+        </div>
+    </nav>
+
+    <img src="https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg?auto=compress&cs=tinysrgb&w=1974&h=400&fit=crop" alt="Lock and security shield" class="hero-image">
+
+    <div class="privacy-container">
+        <div class="privacy-content">
+            <h1>Privacy Policy</h1>
+            <p>Effective Date: February 13, 2025</p>
+            <p>Welcome to Count My Words! Your privacy is our top priority. This Privacy Policy explains how we collect, use, and safeguard your personal information when you use our free word count tool and visit our website. We’re committed to transparency and ensuring your data stays secure, so you can focus on improving your writing without worry.</p>
+            
+            <h2>1. Information We Collect</h2>
+            <p>We may collect the following types of data to enhance your experience with our word count tool:</p>
+            <ul>
+                <li>Non-personal information, such as browser type, operating system, and website usage analytics, to improve site performance.</li>
+                <li>Personal information (e.g., email addresses) only if you voluntarily submit it through contact forms, email subscriptions, or feedback—rest assured, we never sell or share this data.</li>
+            </ul>
+            
+            <h2>2. Use of Cookies</h2>
+            <p>Our website uses cookies to make your browsing smoother and more personalized. These cookies help with analytics, ad targeting (via third-party services like Google AdSense), and remembering your preferences. You can manage or disable cookies through your browser settings, but note this may limit some features. We value your choice and transparency in how we use this data.</p>
+            
+            <h2>3. Third-Party Advertisements</h2>
+            <p>We partner with third-party advertising services, including Google AdSense, to display ads on our site. These services may use cookies and similar technologies (like the DoubleClick cookie) to serve ads based on your visits to other websites. Google, as a third-party vendor, collects data to provide personalized ads, but you can opt out by visiting the <a href="https://adssettings.google.com" target="_blank">Google Ad Settings</a> page. We strive to balance ad relevance with your privacy, ensuring no sensitive data is shared beyond what’s necessary.</p>
+            
+            <h2>4. Data Security</h2>
+            <p>We take robust security measures to protect your data, including encryption and secure storage practices. However, no online platform is immune to all risks, so we encourage you to be cautious when sharing personal information online. At Count My Words, we never store your text input—only process it in real-time for analysis—ensuring your privacy remains intact.</p>
+            
+            <h2>5. Links to External Sites</h2>
+            <p>Our website may include links to third-party sites, like social media or ad platforms. We’re not responsible for their privacy policies or practices. We recommend reviewing those policies before interacting with external links to protect your data.</p>
+            
+            <h2>6. Updates to This Policy</h2>
+            <p>We may update this Privacy Policy to reflect changes in our practices or legal requirements. Any updates will be posted here with the new effective date, so check back periodically. Your continued use of Count My Words after updates constitutes acceptance of the revised policy.</p>
+            
+            <h2>7. Your Rights and Choices</h2>
+            <p>You have the right to access, correct, or delete any personal data you’ve shared with us. You can also opt out of non-essential cookies or ad tracking. Contact us at <a href="mailto:countmywords.com@gmail.com">countmywords.com@gmail.com</a> to exercise these rights or ask questions. We’re here to ensure your privacy is respected every step of the way.</p>
+            
+            <p><a href="index.html">Back to Home</a></p>
+        </div>
     </div>
+
+    <div class="footer">
+        <p><a href="About.html">About Us</a> | <a href="privacy.html">Privacy Policy</a></p>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.querySelector(".nav-links");
+            navLinks.classList.toggle("active");
+        }
+    </script>
 </body>
 </html>
