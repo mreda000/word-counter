@@ -2,19 +2,19 @@
 <html lang="en">
 <head>
     <meta name="description" content="Count My Words - A powerful online text analysis tool that counts words, characters, sentences, and more.">
-<meta name="keywords" content="word counter, text analysis, character count, SEO tool">
-<meta name="author" content="CountMyWords.net">
-<meta property="og:title" content="Count My Words - Word Counter Tool">
-<meta property="og:description" content="Easily count words, characters, and more with Count My Words!">
-<meta property="og:image" content="https://countmywords.net/favicon.png">
-<meta property="og:url" content="https://countmywords.net">
+    <meta name="keywords" content="word counter, text analysis, character count, SEO tool">
+    <meta name="author" content="CountMyWords.net">
+    <meta property="og:title" content="Count My Words - Word Counter Tool">
+    <meta property="og:description" content="Easily count words, characters, and more with Count My Words!">
+    <meta property="og:image" content="https://countmywords.net/favicon.png">
+    <meta property="og:url" content="https://countmywords.net">
+    <meta name="twitter:card" content="summary_large_image">
 
     <link rel="icon" type="image/png" href="favicon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Count My Words!</title>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4432960986920022"
-     crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4432960986920022" crossorigin="anonymous"></script>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -26,6 +26,7 @@
             background-color: #f5f5f7;
             color: #1d1d1f;
             padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
         }
         .container {
             background: white;
@@ -38,14 +39,8 @@
             flex-direction: column;
             gap: 15px;
         }
-        .left, .right {
-            width: 100%;
-        }
-        h1 {
-            font-size: 24px;
-            font-weight: 600;
-            text-align: center;
-        }
+        .left, .right { width: 100%; }
+        h1 { font-size: 24px; font-weight: 600; text-align: center; }
         textarea, input {
             width: calc(100% - 20px);
             padding: 10px;
@@ -55,9 +50,7 @@
             outline: none;
             transition: border 0.3s ease-in-out;
         }
-        input:focus, textarea:focus {
-            border: 1px solid #007AFF;
-        }
+        input:focus, textarea:focus { border: 1px solid #007AFF; }
         button {
             width: 100%;
             padding: 10px;
@@ -69,9 +62,8 @@
             font-size: 14px;
             transition: background 0.3s ease-in-out;
         }
-        button:hover {
-            background-color: #005ecb;
-        }
+        button:hover { background-color: #005ecb; }
+        button:disabled { background-color: #ccc; cursor: not-allowed; }
         .counter {
             font-size: 14px;
             font-weight: 500;
@@ -81,7 +73,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: transform 0.2s;
         }
+        .counter:hover { transform: scale(1.02); }
         .footer {
             margin-top: 15px;
             padding: 8px;
@@ -98,21 +92,14 @@
             font-weight: bold;
             margin: 0 8px;
         }
-        .footer a:hover {
-            text-decoration: underline;
-        }
+        .footer a:hover { text-decoration: underline; }
+        .dark-mode { background-color: #1d1d1f; color: #f5f5f7; }
+        .dark-mode .container { background: #2c2c2e; }
+        .dark-mode .counter { background: #3a3a3c; }
         @media (max-width: 600px) {
-            .container {
-                padding: 15px;
-                max-width: 90%;
-            }
-            h1 {
-                font-size: 22px;
-            }
-            .counter {
-                font-size: 12px;
-                padding: 5px;
-            }
+            .container { padding: 15px; max-width: 90%; }
+            h1 { font-size: 22px; }
+            .counter { font-size: 12px; padding: 5px; }
         }
     </style>
 </head>
@@ -121,8 +108,10 @@
         <div class="left">
             <h1>Count My Words!</h1>
             <input type="text" id="urlInput" placeholder="Enter URL here..." />
-            <button onclick="fetchTextFromURL()">Fetch & Analyze</button>
-            <textarea id="textInput" placeholder="Type or paste your text here..." oninput="analyzeText()"></textarea>
+            <button onclick="fetchTextFromURL()" id="fetchBtn">Fetch & Analyze</button>
+            <textarea id="textInput" placeholder="Type or paste your text here..."></textarea>
+            <button onclick="clearText()" style="background-color: #ff3b30">Clear</button>
+            <button onclick="copyResults()">Copy Results</button>
         </div>
         <div class="right">
             <p class="counter">📖 Word Count: <span id="wordCount">0</span></p>
@@ -130,27 +119,40 @@
             <p class="counter">🔤 Character Count: <span id="charCount">0</span></p>
             <p class="counter">✍️ Sentence Count: <span id="sentenceCount">0</span></p>
             <p class="counter">📄 Paragraph Count: <span id="paragraphCount">0</span></p>
-            <p class="counter">🎓 Reading Level: <span id="readingLevel">0</span></p>
+            <p class="counter">🎓 Reading Level: <span id="readingLevel">N/A</span></p>
             <p class="counter">⏳ Reading Time (sec): <span id="readingTime">0</span></p>
             <p class="counter">🗣️ Speaking Time (sec): <span id="speakingTime">0</span></p>
         </div>
+        <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
     </div>
     <div class="footer">
         <p><a href="About.html">About Us</a> | <a href="privacy.html">Privacy Policy</a></p>
     </div>
 
     <script>
+        // Debounce utility to limit function calls
+        function debounce(func, wait) {
+            let timeout;
+            return function (...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), wait);
+            };
+        }
+
+        // Analyze text and update counters
         function analyzeText() {
-            let text = document.getElementById("textInput").value;
-            let words = text.trim().split(/\s+/).filter(word => word.length > 0);
-            let numbers = text.match(/\b\d+\b/g) || [];
-            let characters = text.length;
-            let sentences = text.split(/[.!?]+/).filter(sentence => sentence.trim().length > 0);
-            let paragraphs = text.split(/\n+/).filter(paragraph => paragraph.trim().length > 0);
-            let readingLevel = Math.round((words.length / sentences.length) + (sentences.length / paragraphs.length)) || 0;
-            let readingTime = Math.round(words.length / 200);
-            let speakingTime = Math.round(words.length / 130);
-            
+            const text = document.getElementById("textInput").value;
+            const words = text.trim().split(/\s+/).filter(word => word.length > 0);
+            const numbers = text.match(/\b\d+\b/g) || [];
+            const characters = text.length;
+            const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0);
+            const paragraphs = text.split(/\n+/).filter(p => p.trim().length > 0);
+
+            // Flesch-Kincaid Grade Level (simplified)
+            const readingLevel = text.trim() ? Math.round(0.39 * (words.length / sentences.length) + 11.8 * (syllables(text) / words.length) - 15.59) : "N/A";
+            const readingTime = Math.round(words.length / 200); // 200 wpm
+            const speakingTime = Math.round(words.length / 130); // 130 wpm
+
             document.getElementById("wordCount").textContent = words.length;
             document.getElementById("numberCount").textContent = numbers.length;
             document.getElementById("charCount").textContent = characters;
@@ -160,6 +162,65 @@
             document.getElementById("readingTime").textContent = readingTime;
             document.getElementById("speakingTime").textContent = speakingTime;
         }
+
+        // Simple syllable counter (approximation)
+        function syllables(text) {
+            return text.toLowerCase().split(/\s+/).reduce((count, word) => {
+                return count + (word.match(/[aeiouy]+/g) || []).length || 1;
+            }, 0);
+        }
+
+        // Fetch text from URL
+        async function fetchTextFromURL() {
+            const url = document.getElementById("urlInput").value.trim();
+            const fetchBtn = document.getElementById("fetchBtn");
+            if (!url) return alert("Please enter a valid URL");
+
+            fetchBtn.disabled = true;
+            fetchBtn.textContent = "Fetching...";
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error("Failed to fetch URL");
+                const text = await response.text();
+                document.getElementById("textInput").value = text;
+                analyzeText();
+            } catch (error) {
+                alert("Error fetching URL: " + error.message);
+            } finally {
+                fetchBtn.disabled = false;
+                fetchBtn.textContent = "Fetch & Analyze";
+            }
+        }
+
+        // Clear text and reset counters
+        function clearText() {
+            document.getElementById("textInput").value = "";
+            analyzeText();
+        }
+
+        // Copy results to clipboard
+        function copyResults() {
+            const results = `
+Word Count: ${document.getElementById("wordCount").textContent}
+Number Count: ${document.getElementById("numberCount").textContent}
+Character Count: ${document.getElementById("charCount").textContent}
+Sentence Count: ${document.getElementById("sentenceCount").textContent}
+Paragraph Count: ${document.getElementById("paragraphCount").textContent}
+Reading Level: ${document.getElementById("readingLevel").textContent}
+Reading Time: ${document.getElementById("readingTime").textContent} sec
+Speaking Time: ${document.getElementById("speakingTime").textContent} sec
+            `.trim();
+            navigator.clipboard.writeText(results).then(() => alert("Results copied to clipboard!"));
+        }
+
+        // Toggle dark mode
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark-mode");
+        }
+
+        // Add event listeners
+        document.getElementById("textInput").addEventListener("input", debounce(analyzeText, 300));
     </script>
 </body>
 </html>
