@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Get answers to frequently asked questions about Count My Words, our free word count tool for text analysis.">
+    <meta name="keywords" content="faq count my words, word count tool, text analysis, writing questions, data privacy">
+    <title>FAQ - Count My Words</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1d1d1f; /* Dark mode default */
+            color: #f5f5f7;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #003087;
+            color: white;
+            padding: 8px 20px; /* Kept thin for sleek look */
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15); /* Light shadow for thin, clean look */
+            z-index: 1000;
+            animation: slideDown 0.5s ease-out; /* Faster, smoother slide-in */
+        }
+        .toolbar {
+            display: flex;
+            justify-content: space-between; /* Space between logo and links on desktop */
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 15px; /* Consistent spacing for clean alignment */
+        }
+        .toolbar a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 16px; /* Kept small for thin bar */
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            border-radius: 4px; /* Sharp, modern radius */
+            position: relative;
+            font-size: 14px; /* Consistent with your thin design */
+            min-width: 60px; /* Ensure minimum width for readability */
+            text-align: center; /* Center text for balance */
+        }
+        .toolbar a:hover {
+            background-color: rgba(255, 255, 255, 0.1); /* Subtle hover */
+            transform: scale(1.05); /* Smooth scale */
+            box-shadow: 0 0 12px rgba(255, 204, 0, 0.6); /* Softer yellow glow */
+        }
+        .toolbar a:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background: #ffcc00;
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease-out;
+        }
+        .toolbar a:hover:after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+        .nav-links {
+            display: flex;
+            gap: 10px; /* Tight spacing for clean look */
+            align-items: center;
+        }
+        .menu-toggle {
+            display: none; /* Hidden by default on desktop */
+            font-size: 24px; /* Smaller for mobile-friendly tap */
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 6px;
+            transition: transform 0.3s ease, color 0.3s ease;
+            min-height: 44px; /* Touch target size */
+            min-width: 44px; /* Touch target size */
+            margin-left: 10px; /* Space from content */
+            outline: none; /* Remove default outline for all states */
+        }
+        .menu-toggle:hover {
+            color: #ffcc00; /* Yellow for contrast, no rotation */
+        }
+        .menu-toggle:focus {
+            outline: none; /* Remove focus outline, but use :focus-visible for keyboard users */
+        }
+        .menu-toggle:focus-visible {
+            outline: 2px solid #ffcc00; /* Yellow outline for keyboard navigation */
+            outline-offset: 2px;
+        }
+        .hero-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1s ease-in;
+            margin-top: 60px; /* Adjusted for thinner nav */
+        }
+        .faq-container {
+            background: #2c2c2e;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            width: 100%;
+            max-width: 900px;
+            margin: -100px auto 40px;
+            position: relative;
+            z-index: 10;
+            animation: slideUp 0.8s ease-out;
+        }
+        .faq-content h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin: 0 0 20px 0;
+            color: #007AFF;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1.2s ease-in;
+        }
+        .faq-content .question {
+            font-size: 20px;
+            font-weight: 600;
+            color: #007AFF;
+            margin: 25px 0 10px 0;
+            animation: fadeIn 1.4s ease-in;
+        }
+        .faq-content p {
+            font-size: 18px;
+            margin: 0 0 20px 0;
+            animation: fadeIn 1.6s ease-in;
+        }
+        .faq-content a {
+            color: #007AFF;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .faq-content a:hover {
+            color: #ffcc00;
+        }
+        .footer {
+            padding: 15px;
+            width: 100%;
+            background: #003087;
+            color: white;
+            text-align: center;
+            font-size: 14px;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2);
+            margin-top: 15px;
+            animation: slideUp 1s ease-out;
+        }
+        .footer a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0 10px;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+        .footer a:hover {
+            color: #ffcc00;
+            transform: scale(1.1);
+        }
+        /* Prevent body scroll when menu is open */
+        body.no-scroll {
+            overflow: hidden;
+        }
+        /* Animation Keyframes */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        /* Mobile-Specific Adjustments */
+        @media (max-width: 600px) {
+            .hero-image { height: 250px; }
+            .faq-container { 
+                padding: 20px; 
+                margin: -60px auto 20px; 
+                max-width: 90%; 
+            }
+            .faq-content h1 { font-size: 28px; }
+            .faq-content .question { font-size: 18px; }
+            .faq-content p { font-size: 16px; }
+            .menu-toggle { display: block; }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: fixed;
+                top: 0;
+                left: -250px; /* Start off-screen */
+                width: 250px;
+                height: 100vh;
+                background-color: #003087;
+                padding: 60px 20px 20px; /* More padding for readability */
+                box-shadow: 4px 0 15px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+                transition: left 0.5s ease-out; /* Smooth slide-in */
+                z-index: 1000; /* Ensure it stays below menu-toggle */
+            }
+            .nav-links.active {
+                display: flex;
+                left: 0; /* Slide in from left */
+            }
+            .toolbar a { 
+                padding: 12px 14px; 
+                font-size: 16px; 
+            }
+        }
+        @media (max-width: 400px) {
+            .hero-image { height: 200px; }
+            .faq-container { padding: 15px; }
+            .faq-content h1 { font-size: 24px; }
+            .faq-content .question { font-size: 16px; }
+            .faq-content p { font-size: 14px; }
+            .toolbar a { padding: 10px 12px; font-size: 14px; }
+            .menu-toggle { font-size: 20px; padding: 4px; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="toolbar">
+            <a href="index.html">Count My Words</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="blog.html">Blog</a>
+                <a href="how-to-use.html">How to Use</a>
+                <a href="faq.html">FAQ</a>
+            </div>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        </div>
+    </nav>
+
+    <img src="https://images.pexels.com/photos/256468/pexels-photo-256468.jpeg?auto=compress&cs=tinysrgb&w=1974&h=400&fit=crop" alt="Person asking questions" class="hero-image">
+
+    <div class="faq-container">
+        <div class="faq-content">
+            <h1>Frequently Asked Questions</h1>
+            <div class="question">What is Count My Words?</div>
+            <p>Count My Words is a free, online word count tool that helps writers, students, and professionals analyze text efficiently. It offers word counts, character counts, sentence counts, paragraph counts, reading levels, reading times, speaking times, and URL fetching—perfect for improving writing, optimizing SEO, and preparing speeches. It’s fast, intuitive, and completely free to use on any device.</p>
+            
+            <div class="question">Is Count My Words really free to use?</div>
+            <p>Yes, Count My Words is entirely free with no hidden costs or subscriptions. You can access all features—like real-time text analysis, URL fetching, and dark mode—without paying a dime. We’re committed to providing a valuable, accessible tool for everyone, ensuring no barriers to improving your writing.</p>
+            
+            <div class="question">How accurate are the reading level and time estimates?</div>
+            <p>Our reading level is calculated using a simplified Flesch-Kincaid formula, based on sentence length and word complexity, targeting 7th-8th grade readability for blogs. Reading time assumes 200 words per minute, and speaking time uses 130 words per minute—standard benchmarks. These estimates are highly accurate for general purposes, but individual reading or speaking speeds may vary slightly.</p>
+            
+            <div class="question">Does Count My Words store my text or personal information?</div>
+            <p>No, we don’t store your text input. Count My Words processes your data in real-time for analysis and doesn’t save or share it. We only collect non-personal usage analytics (e.g., browser type) to improve our site. Review our <a href="privacy.html">Privacy Policy</a> for full details on data handling.</p>
+            
+            <div class="question">Can I use Count My Words on my mobile phone?</div>
+            <p>Absolutely! Count My Words is fully mobile-friendly, with a responsive design that works on phones and tablets. It features a hamburger menu for navigation, large touch targets, and dark/light mode options. Use it anywhere, anytime, for free, with no app download needed.</p>
+            
+            <p>For more help, explore our <a href="blog.html">blog</a> for writing tips or contact us at <a href="mailto:countmywords.com@gmail.com">countmywords.com@gmail.com</a>. Start using Count My Words today to enhance your writing!</p>
+            
+            <p><a href="index.html">Back to Home</a></p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p><a href="About.html">About Us</a> | <a href="privacy.html">Privacy Policy</a></p>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.querySelector(".nav-links");
+            navLinks.classList.toggle("active");
+            // Ensure body doesn't scroll when menu is open
+            document.body.classList.toggle("no-scroll", navLinks.classList.contains("active"));
+        }
+    </script>
+</body>
+</html>
