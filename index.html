@@ -392,11 +392,11 @@
             <input type="text" id="urlInput" placeholder="Enter URL here..." />
             <div style="display: flex; gap: 5px; flex-wrap: wrap; justify-content: center;">
                 <button onclick="fetchTextFromURL()" id="fetchBtn">Fetch & Analyze</button>
-                <button onclick="clearText()" style="background-color: #ff3b30">Clear</button>
+                
                 <button onclick="copyResults()">Copy Results</button>
             </div>
             <textarea id="textInput" placeholder="Type or paste your text here..."></textarea>
-           
+            <button onclick="clearText()" style="background-color: #ff3b30">Clear</button>
         </div>
         <div class="right">
             <p class="counter">📖 Word Count: <span id="wordCount">0</span></p>
