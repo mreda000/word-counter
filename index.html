@@ -18,26 +18,25 @@
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #f5f5f7;
-            color: #1d1d1f;
-            padding: 20px;
-            margin-top: 60px;
-            transition: background-color 0.3s, color 0.3s;
+            margin: 0;
+            padding: 0;
+            background-color: #1d1d1f; /* Dark mode default */
+            color: #f5f5f7;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
         }
         nav {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            background-color: #007AFF;
+            background-color: #003087;
             color: white;
-            padding: 10px 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             z-index: 1000;
+            animation: slideDown 0.8s ease-out; /* Slide-in animation */
         }
         .toolbar {
             display: flex;
@@ -49,136 +48,264 @@
         .toolbar a {
             color: white;
             text-decoration: none;
-            font-weight: 500;
-            padding: 8px 16px;
-            transition: background 0.3s;
+            font-weight: 600;
+            padding: 12px 24px;
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            border-radius: 8px;
+            position: relative; /* For glow effect */
         }
         .toolbar a:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 6px;
+            background-color: rgba(255, 255, 255, 0.15);
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.8); /* Yellow glow on hover */
+        }
+        .toolbar a:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background: #ffcc00;
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease-out;
+        }
+        .toolbar a:hover:after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
         }
         .nav-links {
             display: flex;
-            gap: 10px;
+            gap: 15px;
         }
         .menu-toggle {
             display: none;
-            font-size: 24px;
+            font-size: 28px;
             background: none;
             border: none;
             color: white;
             cursor: pointer;
+            padding: 8px;
+            transition: transform 0.2s ease;
+        }
+        .menu-toggle:hover {
+            transform: scale(1.1);
         }
         .container {
-            background: white;
+            background: #2c2c2e;
             padding: 20px;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
             width: 100%;
             max-width: 500px;
             display: flex;
             flex-direction: column;
             gap: 15px;
+            margin: 80px auto 20px;
+            position: relative;
+            animation: slideUp 0.8s ease-out;
+            border: 2px solid transparent;
+            box-shadow: 0 0 15px rgba(0, 122, 255, 0.5);
+            animation: glow 3s ease-in-out infinite;
         }
         .left, .right { width: 100%; }
-        h1 { font-size: 24px; font-weight: 600; text-align: center; }
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0 0 15px 0;
+            color: #007AFF;
+            text-align: center;
+            animation: fadeIn 1.2s ease-in;
+        }
         textarea {
             width: calc(100% - 20px);
-            padding: 10px;
-            border: 1px solid #d2d2d7;
-            border-radius: 8px;
-            font-size: 14px;
+            padding: 12px;
+            border: 1px solid #3a3a3c;
+            border-radius: 12px;
+            font-size: 16px;
             outline: none;
-            transition: border 0.3s ease-in-out;
-            min-height: 150px;
+            background: #3a3a3c;
+            color: #f5f5f7;
+            transition: border 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            min-height: 120px;
             resize: vertical;
+        }
+        textarea:focus {
+            border: 1px solid #007AFF;
+            box-shadow: 0 0 10px rgba(0, 122, 255, 0.5);
         }
         input {
             width: calc(100% - 20px);
             padding: 12px;
-            border: 1px solid #d2d2d7;
-            border-radius: 8px;
+            border: 1px solid #3a3a3c;
+            border-radius: 12px;
             font-size: 16px;
             outline: none;
-            transition: border 0.3s ease-in-out;
+            background: #3a3a3c;
+            color: #f5f5f7;
+            transition: border 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
-        input:focus, textarea:focus { border: 1px solid #007AFF; }
+        input:focus {
+            border: 1px solid #007AFF;
+            box-shadow: 0 0 10px rgba(0, 122, 255, 0.5);
+        }
         button {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             background-color: #007AFF;
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
-            font-size: 14px;
-            transition: background 0.3s ease-in-out;
+            font-size: 16px;
+            transition: background 0.3s ease-in-out, transform 0.2s ease;
             margin: 5px 0;
             min-height: 44px;
         }
-        button:hover { background-color: #005ecb; }
-        button:disabled { background-color: #ccc; cursor: not-allowed; }
+        button:hover {
+            background-color: #005ecb;
+            transform: scale(1.02);
+        }
+        button:disabled {
+            background-color: #3a3a3c;
+            cursor: not-allowed;
+        }
         .counter {
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 500;
-            padding: 6px;
-            background: #f0f0f5;
-            border-radius: 6px;
+            padding: 10px;
+            background: #3a3a3c;
+            border-radius: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: transform 0.2s;
+            transition: transform 0.2s, background 0.3s;
+            animation: fadeIn 1.5s ease-in;
         }
-        .counter:hover { transform: scale(1.02); }
+        .counter:hover {
+            transform: scale(1.02);
+            background: #444446;
+        }
         .footer {
-            margin-top: 15px;
-            padding: 8px;
+            padding: 15px;
             width: 100%;
-            background: #007AFF;
+            background: #003087;
             color: white;
             text-align: center;
             font-size: 14px;
-            border-radius: 8px;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2);
+            margin-top: 15px;
         }
         .footer a {
             color: white;
             text-decoration: none;
-            font-weight: bold;
-            margin: 0 8px;
+            font-weight: 600;
+            margin: 0 10px;
+            transition: color 0.3s ease;
         }
-        .footer a:hover { text-decoration: underline; }
-        .dark-mode { background-color: #1d1d1f; color: #f5f5f7; }
-        .dark-mode .container { background: #2c2c2e; }
-        .dark-mode .counter { background: #3a3a3c; }
-        .dark-mode nav { background-color: #003087; }
+        .footer a:hover {
+            color: #ffcc00;
+        }
+        /* Particle Animation (Background) */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(245, 245, 247, 0.3); /* Light dots on dark background */
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+        /* Animation Keyframes */
+        @keyframes float {
+            0% { transform: translateY(100vh); opacity: 0; }
+            25% { opacity: 0.8; }
+            50% { opacity: 0.5; }
+            75% { opacity: 0.8; }
+            100% { transform: translateY(-100vh); opacity: 0; }
+        }
+        @keyframes glow {
+            0% { box-shadow: 0 0 15px rgba(0, 122, 255, 0.5); }
+            50% { box-shadow: 0 0 25px rgba(0, 122, 255, 0.8); }
+            100% { box-shadow: 0 0 15px rgba(0, 122, 255, 0.5); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        /* Mobile-Specific Adjustments */
         @media (max-width: 600px) {
-            .container { padding: 10px; max-width: 95%; }
-            h1 { font-size: 20px; }
-            .counter { font-size: 12px; padding: 4px; }
-            button { font-size: 13px; }
-            textarea, input { font-size: 14px; }
+            .container { 
+                padding: 15px; /* Even smaller for tiny screens */
+                max-width: 90%; /* More screen usage on mobile */
+                margin: 60px auto 15px; /* Adjusted for smaller nav */
+            }
+            h1 { font-size: 24px; }
+            .counter { 
+                font-size: 14px; 
+                padding: 8px; 
+                font-weight: 500; 
+            }
+            button { 
+                font-size: 14px; 
+                padding: 10px; 
+                min-height: 40px; /* Smaller touch target, still tappable */
+            }
+            textarea, input { 
+                font-size: 14px; 
+                padding: 10px; 
+                min-height: 100px; /* Smaller textarea for mobile */
+            }
             .menu-toggle { display: block; }
             .nav-links {
                 display: none;
                 flex-direction: column;
                 position: absolute;
-                top: 50px;
+                top: 60px;
                 left: 0;
                 width: 100%;
-                background-color: #007AFF;
-                padding: 10px 0;
+                background-color: #003087;
+                padding: 15px 0;
             }
             .nav-links.active { display: flex; }
-            .toolbar a { padding: 12px 20px; }
+            .toolbar a { 
+                padding: 12px 20px; 
+                font-size: 16px; /* Smaller on mobile */
+            }
+            .particle { 
+                width: 3px; 
+                height: 3px; 
+            } /* Smaller particles on mobile */
         }
         @media (max-width: 400px) {
-            .container { padding: 8px; }
-            h1 { font-size: 18px; }
-            button { padding: 8px; }
+            .container { padding: 10px; }
+            h1 { font-size: 20px; }
+            .counter { font-size: 12px; padding: 6px; }
+            button { padding: 8px; font-size: 12px; }
+            textarea, input { font-size: 12px; padding: 8px; }
+            .toolbar a { padding: 10px 16px; font-size: 14px; }
         }
     </style>
 </head>
-<body class="dark-mode"> <!-- Dark mode enabled by default -->
+<body>
     <nav>
         <div class="toolbar">
             <a href="index.html">Count My Words</a>
@@ -190,11 +317,28 @@
         </div>
     </nav>
 
+    <div class="particles">
+        <!-- Generate 20 particles for a subtle effect -->
+        <script>
+            function createParticles(count) {
+                const particlesDiv = document.querySelector('.particles');
+                for (let i = 0; i < count; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + 'vw';
+                    particle.style.animationDelay = Math.random() * 10 + 's';
+                    particlesDiv.appendChild(particle);
+                }
+            }
+            createParticles(20); // Adjust number for density (light for mobile)
+        </script>
+    </div>
+
     <div class="container">
         <div class="left">
             <h1>Count My Words!</h1>
             <input type="text" id="urlInput" placeholder="Enter URL here..." />
-            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <div style="display: flex; gap: 5px; flex-wrap: wrap; justify-content: center;">
                 <button onclick="fetchTextFromURL()" id="fetchBtn">Fetch & Analyze</button>
                 <button onclick="clearText()" style="background-color: #ff3b30">Clear</button>
                 <button onclick="copyResults()">Copy Results</button>
@@ -213,6 +357,7 @@
             <p class="counter">🗣️ Speaking Time (sec): <span id="speakingTime">0</span></p>
         </div>
     </div>
+
     <div class="footer">
         <p><a href="About.html">About Us</a> | <a href="privacy.html">Privacy Policy</a></p>
     </div>
