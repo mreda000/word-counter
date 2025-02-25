@@ -40,7 +40,7 @@
         }
         .toolbar {
             display: flex;
-            justify-content: flex-start; /* Align items to the left */
+            justify-content: space-between; /* Default desktop: space between items */
             align-items: center;
             max-width: 1200px;
             margin: 0 auto;
@@ -82,6 +82,7 @@
             gap: 15px;
         }
         .menu-toggle {
+            display: none; /* Hidden by default on desktop */
             font-size: 28px;
             background: none;
             border: none;
@@ -93,7 +94,7 @@
             min-width: 44px;
         }
         .menu-toggle:hover {
-            transform: rotate(90deg); /* Cooler hover effect */
+            transform: rotate(90deg);
             color: #ffcc00;
         }
         .container {
@@ -273,7 +274,7 @@
         @media (max-width: 600px) {
             nav {
                 padding: 10px 15px;
-                background: none; /* Remove top bar on mobile */
+                background: none;
                 box-shadow: none;
             }
             .toolbar {
@@ -281,7 +282,7 @@
             }
             .menu-toggle {
                 display: block;
-                order: -1; /* Move hamburger to the left */
+                order: -1;
             }
             .nav-links {
                 display: none;
@@ -300,12 +301,12 @@
                 display: flex;
             }
             .toolbar a[href="index.html"] {
-                display: none; /* Hide "Count My Words" on mobile */
+                display: none;
             }
             .container {
                 padding: 15px;
                 max-width: 90%;
-                margin: 20px auto 15px; /* Adjusted for no nav bar */
+                margin: 20px auto 15px;
             }
             h1 { font-size: 24px; }
             .counter { font-size: 14px; padding: 8px; }
@@ -353,7 +354,7 @@
                     particlesDiv.appendChild(particle);
                 }
             }
-            createParticles(30); // Increased for more visibility
+            createParticles(30);
         </script>
     </div>
 
