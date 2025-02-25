@@ -338,6 +338,10 @@
         <script>
             function createParticles(count) {
                 const particlesDiv = document.querySelector('.particles');
+                if (!particlesDiv) {
+                    console.error('Particles container not found!');
+                    return;
+                }
                 for (let i = 0; i < count; i++) {
                     const particle = document.createElement('div');
                     particle.className = 'particle';
@@ -345,8 +349,12 @@
                     particle.style.animationDelay = Math.random() * 10 + 's';
                     particlesDiv.appendChild(particle);
                 }
+                console.log('Particles created:', count);
             }
-            createParticles(30); // Reinstated with 30 particles for a cool effect
+            // Try to create particles after the DOM is fully loaded
+            document.addEventListener('DOMContentLoaded', () => {
+                createParticles(30);
+            });
         </script>
     </div>
 
