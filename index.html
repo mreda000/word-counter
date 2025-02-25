@@ -20,7 +20,7 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #1d1d1f; /* Dark mode default */
+            background-color: #1d1d1f;
             color: #f5f5f7;
             line-height: 1.6;
             overflow-x: hidden;
@@ -33,33 +33,33 @@
             width: 100%;
             background-color: #003087;
             color: white;
-            padding: 12px 20px; /* Reduced padding for tighter fit */
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Softer shadow */
+            padding: 12px 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
             z-index: 1000;
-            animation: slideDown 0.6s ease-out; /* Faster, smoother slide-in */
+            animation: slideDown 0.8s ease-out;
         }
         .toolbar {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start; /* Align items to the left */
             align-items: center;
             max-width: 1200px;
             margin: 0 auto;
-            gap: 10px; /* Added gap for spacing */
+            gap: 15px;
         }
         .toolbar a {
             color: white;
             text-decoration: none;
             font-weight: 600;
-            padding: 10px 18px; /* Reduced padding for cleaner look */
+            padding: 10px 18px;
             transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-            border-radius: 6px; /* Smaller radius for modern look */
+            border-radius: 6px;
             position: relative;
-            font-size: 16px; /* Consistent font size */
+            font-size: 16px;
         }
         .toolbar a:hover {
-            background-color: rgba(255, 255, 255, 0.1); /* Softer hover background */
-            transform: scale(1.03); /* Subtler scale */
-            box-shadow: 0 0 12px rgba(255, 204, 0, 0.6); /* Softer yellow glow */
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.7);
         }
         .toolbar a:after {
             content: '';
@@ -71,7 +71,7 @@
             background: #ffcc00;
             transform: scaleX(0);
             transform-origin: bottom right;
-            transition: transform 0.3s ease-out;
+            transition: transform 0.4s ease-out;
         }
         .toolbar a:hover:after {
             transform: scaleX(1);
@@ -79,23 +79,22 @@
         }
         .nav-links {
             display: flex;
-            gap: 10px; /* Reduced gap for tighter fit */
+            gap: 15px;
         }
         .menu-toggle {
-            display: none;
-            font-size: 24px; /* Slightly smaller for mobile */
+            font-size: 28px;
             background: none;
             border: none;
             color: white;
             cursor: pointer;
             padding: 8px;
-            transition: transform 0.2s ease, color 0.3s ease;
-            min-height: 44px; /* Ensure touch target size */
-            min-width: 44px; /* Ensure touch target size */
+            transition: transform 0.3s ease, color 0.3s ease;
+            min-height: 44px;
+            min-width: 44px;
         }
         .menu-toggle:hover {
-            transform: scale(1.1);
-            color: #ffcc00; /* Yellow hover for contrast */
+            transform: rotate(90deg); /* Cooler hover effect */
+            color: #ffcc00;
         }
         .container {
             background: #2c2c2e;
@@ -109,10 +108,10 @@
             gap: 15px;
             margin: 80px auto 20px;
             position: relative;
-            animation: slideUp 0.8s ease-out;
+            animation: slideUp 1s ease-out;
             border: 2px solid transparent;
-            box-shadow: 0 0 15px rgba(0, 122, 255, 0.5);
-            animation: glow 3s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(0, 122, 255, 0.6);
+            animation: glow 2s ease-in-out infinite;
         }
         .left, .right { width: 100%; }
         h1 {
@@ -121,7 +120,7 @@
             margin: 0 0 15px 0;
             color: #007AFF;
             text-align: center;
-            animation: fadeIn 1.2s ease-in;
+            animation: bounceIn 1.5s ease-out;
         }
         textarea {
             width: calc(100% - 20px);
@@ -132,13 +131,14 @@
             outline: none;
             background: #3a3a3c;
             color: #f5f5f7;
-            transition: border 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            transition: border 0.3s ease-in-out, box-shadow 0.3s ease-in-out, transform 0.2s ease;
             min-height: 120px;
             resize: vertical;
         }
         textarea:focus {
             border: 1px solid #007AFF;
-            box-shadow: 0 0 10px rgba(0, 122, 255, 0.5);
+            box-shadow: 0 0 12px rgba(0, 122, 255, 0.7);
+            transform: scale(1.01);
         }
         input {
             width: calc(100% - 20px);
@@ -149,11 +149,12 @@
             outline: none;
             background: #3a3a3c;
             color: #f5f5f7;
-            transition: border 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            transition: border 0.3s ease-in-out, box-shadow 0.3s ease-in-out, transform 0.2s ease;
         }
         input:focus {
             border: 1px solid #007AFF;
-            box-shadow: 0 0 10px rgba(0, 122, 255, 0.5);
+            box-shadow: 0 0 12px rgba(0, 122, 255, 0.7);
+            transform: scale(1.01);
         }
         button {
             width: 100%;
@@ -164,13 +165,14 @@
             border-radius: 12px;
             cursor: pointer;
             font-size: 16px;
-            transition: background 0.3s ease-in-out, transform 0.2s ease;
+            transition: background 0.3s ease-in-out, transform 0.2s ease, box-shadow 0.3s ease;
             margin: 5px 0;
             min-height: 44px;
         }
         button:hover {
             background-color: #005ecb;
-            transform: scale(1.02);
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(0, 122, 255, 0.8);
         }
         button:disabled {
             background-color: #3a3a3c;
@@ -185,11 +187,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: transform 0.2s, background 0.3s;
-            animation: fadeIn 1.5s ease-in;
+            transition: transform 0.3s ease, background 0.3s ease;
+            animation: fadeIn 2s ease-in;
         }
         .counter:hover {
-            transform: scale(1.02);
+            transform: scale(1.03);
             background: #444446;
         }
         .footer {
@@ -202,18 +204,20 @@
             border-radius: 10px 10px 0 0;
             box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2);
             margin-top: 15px;
+            animation: slideUp 1s ease-out;
         }
         .footer a {
             color: white;
             text-decoration: none;
             font-weight: 600;
             margin: 0 10px;
-            transition: color 0.3s ease;
+            transition: color 0.3s ease, transform 0.2s ease;
         }
         .footer a:hover {
             color: #ffcc00;
+            transform: scale(1.1);
         }
-        /* Particle Animation (Background) */
+        /* Particle Animation */
         .particles {
             position: fixed;
             top: 0;
@@ -225,82 +229,89 @@
         }
         .particle {
             position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(245, 245, 247, 0.3); /* Light dots on dark background */
+            width: 6px;
+            height: 6px;
+            background: rgba(245, 245, 247, 0.4);
             border-radius: 50%;
-            animation: float 20s infinite linear;
+            animation: float 15s infinite ease-in-out, pulse 2s infinite alternate;
         }
-        /* Animation Keyframes */
+        /* Enhanced Animations */
         @keyframes float {
-            0% { transform: translateY(100vh); opacity: 0; }
-            25% { opacity: 0.8; }
-            50% { opacity: 0.5; }
-            75% { opacity: 0.8; }
-            100% { transform: translateY(-100vh); opacity: 0; }
+            0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+            20% { opacity: 1; }
+            50% { transform: translateY(50vh) translateX(20px) scale(1); opacity: 0.7; }
+            80% { opacity: 1; }
+            100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.3); }
         }
         @keyframes glow {
             0% { box-shadow: 0 0 15px rgba(0, 122, 255, 0.5); }
-            50% { box-shadow: 0 0 25px rgba(0, 122, 255, 0.8); }
+            50% { box-shadow: 0 0 30px rgba(0, 122, 255, 1); }
             100% { box-shadow: 0 0 15px rgba(0, 122, 255, 0.5); }
         }
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
+            from { transform: translateY(100px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
         @keyframes slideDown {
-            from { transform: translateY(-50px); opacity: 0; }
+            from { transform: translateY(-100px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
-        /* Mobile-Specific Adjustments */
+        @keyframes bounceIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            60% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        /* Mobile Adjustments */
         @media (max-width: 600px) {
-            .container { 
-                padding: 15px; /* Even smaller for tiny screens */
-                max-width: 90%; /* More screen usage on mobile */
-                margin: 60px auto 15px; /* Adjusted for smaller nav */
+            nav {
+                padding: 10px 15px;
+                background: none; /* Remove top bar on mobile */
+                box-shadow: none;
             }
-            h1 { font-size: 24px; }
-            .counter { 
-                font-size: 14px; 
-                padding: 8px; 
-                font-weight: 500; 
+            .toolbar {
+                justify-content: flex-start;
             }
-            button { 
-                font-size: 14px; 
-                padding: 10px; 
-                min-height: 40px; /* Smaller touch target, still tappable */
+            .menu-toggle {
+                display: block;
+                order: -1; /* Move hamburger to the left */
             }
-            textarea, input { 
-                font-size: 14px; 
-                padding: 10px; 
-                min-height: 100px; /* Smaller textarea for mobile */
-            }
-            .menu-toggle { display: block; }
             .nav-links {
                 display: none;
                 flex-direction: column;
-                position: absolute;
-                top: 60px;
+                position: fixed;
+                top: 0;
                 left: 0;
-                width: 100%;
+                width: 200px;
+                height: 100vh;
                 background-color: #003087;
-                padding: 10px 0; /* Reduced padding for mobile */
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+                padding: 60px 20px 20px;
+                box-shadow: 4px 0 15px rgba(0, 0, 0, 0.3);
+                animation: slideIn 0.5s ease-out;
             }
-            .nav-links.active { display: flex; }
-            .toolbar a { 
-                padding: 12px 16px; /* Tighter for mobile */
-                font-size: 14px; /* Smaller font for mobile */
-                margin: 0; /* Remove margins for stacking */
+            .nav-links.active {
+                display: flex;
             }
-            .particle { 
-                width: 3px; 
-                height: 3px; 
-            } /* Smaller particles on mobile */
+            .toolbar a[href="index.html"] {
+                display: none; /* Hide "Count My Words" on mobile */
+            }
+            .container {
+                padding: 15px;
+                max-width: 90%;
+                margin: 20px auto 15px; /* Adjusted for no nav bar */
+            }
+            h1 { font-size: 24px; }
+            .counter { font-size: 14px; padding: 8px; }
+            button { font-size: 14px; padding: 10px; min-height: 40px; }
+            textarea, input { font-size: 14px; padding: 10px; min-height: 100px; }
+            .particle { width: 4px; height: 4px; }
         }
         @media (max-width: 400px) {
             .container { padding: 10px; }
@@ -308,25 +319,29 @@
             .counter { font-size: 12px; padding: 6px; }
             button { padding: 8px; font-size: 12px; }
             textarea, input { font-size: 12px; padding: 8px; }
-            .toolbar a { padding: 10px 12px; font-size: 12px; }
-            .menu-toggle { font-size: 20px; padding: 6px; }
+            .menu-toggle { font-size: 24px; padding: 6px; }
+        }
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
         }
     </style>
 </head>
 <body>
     <nav>
         <div class="toolbar">
-            <a href="index.html">Count My Words</a>
             <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <a href="index.html">Count My Words</a>
             <div class="nav-links">
                 <a href="index.html">Home</a>
                 <a href="blog.html">Blog</a>
+                <a href="how-to-use.html">How to Use</a>
+                <a href="faq.html">FAQ</a>
             </div>
         </div>
     </nav>
 
     <div class="particles">
-        <!-- Generate 20 particles for a subtle effect -->
         <script>
             function createParticles(count) {
                 const particlesDiv = document.querySelector('.particles');
@@ -338,7 +353,7 @@
                     particlesDiv.appendChild(particle);
                 }
             }
-            createParticles(20); // Adjust number for density (light for mobile)
+            createParticles(30); // Increased for more visibility
         </script>
     </div>
 
