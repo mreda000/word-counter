@@ -20,7 +20,7 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #1d1d1f;
+            background-color: #1d1d1f; /* Dark mode default */
             color: #f5f5f7;
             line-height: 1.6;
             overflow-x: hidden;
@@ -33,10 +33,10 @@
             width: 100%;
             background-color: #003087;
             color: white;
-            padding: 8px 20px; /* Thinner padding for a sleek look on desktop */
-            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15); /* Lighter shadow for thin look */
+            padding: 8px 20px; /* Kept thin for sleek look */
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15); /* Light shadow for thin, clean look */
             z-index: 1000;
-            animation: slideDown 0.6s ease-out; /* Faster, smoother slide-in */
+            animation: slideDown 0.5s ease-out; /* Faster, smoother slide-in */
         }
         .toolbar {
             display: flex;
@@ -44,22 +44,24 @@
             align-items: center;
             max-width: 1200px;
             margin: 0 auto;
-            gap: 15px;
+            gap: 15px; /* Consistent spacing for clean alignment */
         }
         .toolbar a {
             color: white;
             text-decoration: none;
             font-weight: 600;
-            padding: 8px 16px; /* Slightly smaller padding for thinner look */
+            padding: 8px 16px; /* Kept small for thin bar */
             transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-            border-radius: 4px; /* Smaller radius for a sharper, thinner appearance */
+            border-radius: 4px; /* Sharp, modern radius */
             position: relative;
-            font-size: 14px; /* Slightly smaller font for thinner bar */
+            font-size: 14px; /* Consistent with your thin design */
+            min-width: 60px; /* Ensure minimum width for readability */
+            text-align: center; /* Center text for balance */
         }
         .toolbar a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(255, 204, 0, 0.7);
+            background-color: rgba(255, 255, 255, 0.1); /* Subtle hover */
+            transform: scale(1.05); /* Smooth scale */
+            box-shadow: 0 0 12px rgba(255, 204, 0, 0.6); /* Softer yellow glow */
         }
         .toolbar a:after {
             content: '';
@@ -71,7 +73,7 @@
             background: #ffcc00;
             transform: scaleX(0);
             transform-origin: bottom right;
-            transition: transform 0.4s ease-out;
+            transition: transform 0.3s ease-out;
         }
         .toolbar a:hover:after {
             transform: scaleX(1);
@@ -79,23 +81,113 @@
         }
         .nav-links {
             display: flex;
-            gap: 10px;
+            gap: 10px; /* Tight spacing for clean look */
+            align-items: center;
         }
         .menu-toggle {
             display: none; /* Hidden by default on desktop */
-            font-size: 28px;
+            font-size: 24px; /* Smaller for mobile-friendly tap */
             background: none;
             border: none;
             color: white;
             cursor: pointer;
             padding: 6px;
             transition: transform 0.3s ease, color 0.3s ease;
-            min-height: 44px;
-            min-width: 44px;
+            min-height: 44px; /* Touch target size */
+            min-width: 44px; /* Touch target size */
+            margin-left: 10px; /* Space from content */
         }
         .menu-toggle:hover {
-            transform: rotate(90deg);
-            color: #ffcc00;
+            transform: rotate(90deg); /* Subtle spin for interaction */
+            color: #ffcc00; /* Yellow for contrast */
+        }
+        /* Mobile Nav (Slide-Out Menu) */
+        @media (max-width: 600px) {
+            nav {
+                padding: 8px 10px; /* Thinner padding on mobile */
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .toolbar {
+                width: 100%;
+                gap: 5px; /* Tighter spacing on mobile */
+            }
+            .menu-toggle {
+                display: block; /* Show hamburger on mobile */
+                position: fixed;
+                top: 10px;
+                left: 10px;
+                z-index: 1001;
+            }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: fixed;
+                top: 0;
+                left: -250px; /* Start off-screen */
+                width: 250px;
+                height: 100vh;
+                background-color: #003087;
+                padding: 60px 20px 20px; /* More padding for readability */
+                box-shadow: 4px 0 15px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+                transition: left 0.5s ease-out; /* Smooth slide-in */
+            }
+            .nav-links.active {
+                display: flex;
+                left: 0; /* Slide in from left */
+            }
+            .toolbar a {
+                padding: 12px 14px; /* Tighter for mobile stacking */
+                font-size: 16px; /* Larger for readability on mobile */
+                margin: 0; /* Remove margins for clean stacking */
+                min-width: 80px; /* Ensure readable width on mobile */
+            }
+            .container {
+                padding: 15px;
+                max-width: 90%;
+                margin: 10px auto 15px; /* Adjusted for no nav bar */
+            }
+            h1 { font-size: 24px; }
+            .counter { 
+                font-size: 14px; 
+                padding: 8px; 
+                font-weight: 500; 
+            }
+            button { 
+                font-size: 14px; 
+                padding: 10px; 
+                min-height: 40px; 
+            }
+            textarea, input { 
+                font-size: 14px; 
+                padding: 10px; 
+                min-height: 100px; 
+            }
+            .particle { 
+                width: 3px; 
+                height: 3px; 
+            } /* Smaller particles on mobile */
+        }
+        @media (max-width: 400px) {
+            .container { padding: 10px; }
+            h1 { font-size: 20px; }
+            .counter { font-size: 12px; padding: 6px; }
+            button { padding: 8px; font-size: 12px; }
+            textarea, input { font-size: 12px; padding: 8px; }
+            .toolbar a { 
+                padding: 10px 12px; 
+                font-size: 14px; 
+                min-width: 70px; 
+            }
+            .menu-toggle { 
+                font-size: 20px; 
+                padding: 4px; 
+            }
+            .nav-links {
+                width: 200px; /* Narrower for tiny screens */
+                padding: 50px 15px 15px; /* Tighter padding */
+            }
         }
         .container {
             background: #2c2c2e;
@@ -260,69 +352,6 @@
         @keyframes slideDown {
             from { transform: translateY(-50px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
-        }
-        /* Mobile-Specific Adjustments */
-        @media (max-width: 600px) {
-            nav {
-                display: none; /* Completely hide nav bar on mobile */
-            }
-            .menu-toggle {
-                display: block;
-                position: fixed;
-                top: 10px;
-                left: 10px;
-                z-index: 1001;
-            }
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                position: fixed;
-                top: 0;
-                left: -200px; /* Start off-screen */
-                width: 200px;
-                height: 100vh;
-                background-color: #003087;
-                padding: 60px 20px 20px;
-                box-shadow: 4px 0 15px rgba(0, 0, 0, 0.3);
-                transition: left 0.5s ease-out; /* Smooth slide-in */
-            }
-            .nav-links.active {
-                display: flex;
-                left: 0; /* Slide in from left */
-            }
-            .container {
-                padding: 15px;
-                max-width: 90%;
-                margin: 10px auto 15px; /* Adjusted for no nav bar */
-            }
-            h1 { font-size: 24px; }
-            .counter { 
-                font-size: 14px; 
-                padding: 8px; 
-                font-weight: 500; 
-            }
-            button { 
-                font-size: 14px; 
-                padding: 10px; 
-                min-height: 40px; 
-            }
-            textarea, input { 
-                font-size: 14px; 
-                padding: 10px; 
-                min-height: 100px; 
-            }
-            .particle { 
-                width: 3px; 
-                height: 3px; 
-            } /* Smaller particles on mobile */
-        }
-        @media (max-width: 400px) {
-            .container { padding: 10px; }
-            h1 { font-size: 20px; }
-            .counter { font-size: 12px; padding: 6px; }
-            button { padding: 8px; font-size: 12px; }
-            textarea, input { font-size: 12px; padding: 8px; }
-            .menu-toggle { font-size: 24px; padding: 4px; }
         }
     </style>
 </head>
