@@ -1,6 +1,11 @@
-User-agent: *
-Disallow: /admin/
-Disallow: /private/
+User-agent: Googlebot
 Allow: /
 
-Sitemap: https://countmywords.net/sitemap.xml
+User-agent: AdsBot-Google
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: *
+Disallow: /private/
