@@ -14,7 +14,7 @@
  ],
  hard:[
  "Precision matters: a 17% improvement doesn't appear overnight! Can you manage punctuation, numbers (42, 108, and 365), and unusual combinations without losing your rhythm? The challenge isn't just speed—it's steady, deliberate control.",
- "At 9:45 a.m., the project manager reviewed three estimates: $1,250.00, $980.75, and $2,410.50. "Which option works best?" she asked. Everyone paused, compared the details, and reached a decision—carefully.",
+ "At 9:45 a.m., the project manager reviewed three estimates: $1,250.00, $980.75, and $2,410.50. \"Which option works best?\" she asked. Everyone paused, compared the details, and reached a decision—carefully.",
  "Efficient communication requires more than quick fingers; it demands focus, clarity, and confidence. Consider this: if your accuracy slips from 98% to 87%, is a faster result actually better? Try again—and measure both."
  ]};
  let target="",startTime=null,deadline=0,timer=null,finished=false,lastSeconds=0;
