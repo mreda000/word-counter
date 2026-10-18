@@ -14,11 +14,14 @@ Project: website-7c1a3. Database: `default` (Enterprise, Native Mode), location 
 - Owner update with the invalid test document was denied.
 - Local regression tests pass for bounded allowlisted records, best-score merging, account-switch cancellation, and stopped-watcher cancellation.
 
-## Release remains blocked
-Do not merge or deploy the login feature yet. The old preview targets `(default)`, so it cannot verify saves to the newly created named database. The corrected code selects `default`. The browser could not reach the local verification server, so an end-to-end save/load test of the corrected client remains outstanding.
+## Authorized preview verification
+The user authorized a test-preview deployment. Commit 3a6a403001291bbb9d985dfc43ee56b5aac4bc2d deployed successfully at https://deploy-preview-3--moodywordcounter.netlify.app/account.html . Google sign-in, explicit save, and account persistence/sync after reload succeeded. An actual reaction-game score was confirmed in the authenticated owner's Firestore document. Production/main was not modified.
+
+## Production release remains blocked
+Do not merge or deploy to production yet. The current preview explicitly selects the named database `default` and cloud saving has been verified against Firestore. Restore in a clean browser remains outstanding.
 Successful email registration/login, password reset, second-browser restore, concurrent-device writes, and mobile Safari/Chrome remain unverified. Only Google sign-in was exercised successfully.
 
-The PR title contains [skip netlify] to suppress Deploy Previews. Keep it until an explicit test-preview deployment is authorized. Commit messages also contain [skip netlify]. See https://docs.netlify.com/deploy/manage-deploys/manage-deploys-overview/#skip-a-deploy
+After the authorized deployment, the PR title again contains [skip netlify] to suppress additional automatic Deploy Previews. Keep it until another preview deployment is authorized. Commit messages also contain [skip netlify]. See https://docs.netlify.com/deploy/manage-deploys/manage-deploys-overview/#skip-a-deploy
 
 To publish only Firestore rules later, use Firebase CLI with project website-7c1a3 and `deploy --only firestore:rules`. firebase.json explicitly targets the named database. Never run an unscoped site deployment as part of rule publication.
 
