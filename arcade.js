@@ -1,7 +1,7 @@
 "use strict";
 (()=>{
 const $=id=>document.getElementById(id),root=$("gameRoot"),title=$("gameTitle"),instructions=$("gameInstructions");
-const game=new URLSearchParams(location.search).get("game");
+const game=document.body.dataset.game||new URLSearchParams(location.search).get("game");
 let cleanup=()=>{};
 function node(tag,txt="",cls=""){const x=document.createElement(tag);x.textContent=txt;if(cls)x.className=cls;return x}
 function button(txt,fn){const b=node("button",txt);b.type="button";b.addEventListener("click",fn);return b}
