@@ -23,10 +23,38 @@
 .hero{text-align:center;padding:66px 0 34px}.eyebrow{color:var(--blue);font-weight:700;font-size:.83rem;letter-spacing:.08em;text-transform:uppercase}.hero h1{font-size:clamp(2.4rem,5vw,4.2rem);line-height:1.1;letter-spacing:-.065em;margin:13px 0 18px}.hero p{max-width:660px;margin:auto;color:var(--muted);font-size:1.07rem}
 .workspace{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(300px,1fr);gap:20px;align-items:start}.panel{background:var(--surface);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:24px}.panel h2{font-size:1.1rem;letter-spacing:-.03em;margin:0 0 14px}.field-label{display:block;font-size:.85rem;font-weight:700;margin-bottom:8px}.url-row{display:flex;gap:10px;margin-bottom:18px}.url-row input{min-width:0;flex:1}.url-row button{white-space:nowrap}input,textarea{border:1px solid var(--line);border-radius:12px;background:var(--input);color:var(--text);padding:13px 15px;width:100%}textarea{display:block;resize:vertical;min-height:340px;line-height:1.65}.buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.primary,.secondary{border-radius:12px;padding:12px 17px;font-weight:700;border:1px solid transparent}.primary{background:var(--blue);color:#fff}.primary:hover{background:var(--blue-hover)}.secondary{background:var(--input);border-color:var(--line);color:var(--text)}.primary:disabled{opacity:.55;cursor:wait}.status{min-height:24px;color:var(--muted);font-size:.83rem;margin:10px 0 0}.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.stat{padding:17px 15px;background:var(--input);border:1px solid var(--line);border-radius:15px}.stat-label{color:var(--muted);font-size:.78rem;display:block}.stat-value{display:block;font-size:1.85rem;font-weight:760;letter-spacing:-.055em;overflow-wrap:anywhere}.stat.wide{grid-column:span 2}.stat.wide .stat-value{font-size:1.3rem}.hint{font-size:.8rem;color:var(--muted);margin:15px 0 0}.details{margin:36px auto 65px;max-width:760px}.details h2{letter-spacing:-.04em}.details p{color:var(--muted)}.footer{border-top:1px solid var(--line);padding:26px 0 38px;color:var(--muted);font-size:.85rem}.footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.footer a{margin-left:14px;text-decoration:none}
 @media(max-width:800px){.workspace{grid-template-columns:1fr}.hero{padding-top:48px}.nav-links{gap:12px}}@media(max-width:540px){.shell{width:min(100% - 24px,1120px)}.nav{flex-wrap:wrap;padding:13px 0;min-height:0}.nav-actions{width:100%;justify-content:space-between}.nav-links{gap:12px;flex-wrap:wrap}.nav-links a{font-size:.8rem}.hero{padding:40px 0 26px}.panel{padding:17px;border-radius:18px}.url-row{flex-direction:column}.url-row button{width:100%}.stats{gap:9px}.stat{padding:13px}.stat-value{font-size:1.5rem}textarea{min-height:280px}.footer a{margin-left:0;margin-right:14px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* Soft ambient particles sit behind the app, with no pointer interaction. */
+.ambient{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;isolation:isolate}
+.ambient-dot{position:absolute;bottom:-24px;width:var(--size);height:var(--size);left:var(--x);border-radius:50%;background:var(--blue);opacity:0;box-shadow:0 0 14px 2px color-mix(in srgb,var(--blue) 30%,transparent);animation:ambient-rise var(--duration) linear var(--delay) infinite}
+body>header,body>main,body>footer{position:relative;z-index:1}
+@keyframes ambient-rise{0%{transform:translate3d(0,0,0);opacity:0}12%{opacity:.20}75%{opacity:.16}100%{transform:translate3d(var(--drift),-110vh,0);opacity:0}}
+:root[data-theme="dark"] .ambient-dot{opacity:0;box-shadow:0 0 16px 3px color-mix(in srgb,var(--blue) 40%,transparent)}
+@media(prefers-reduced-motion:reduce){.ambient-dot{animation:none;opacity:.10;bottom:auto;top:var(--y)}}
+
 </style>
 <script>try{document.documentElement.dataset.theme=localStorage.getItem("cmw-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}catch(e){document.documentElement.dataset.theme="light"}</script>
 </head>
 <body>
+<div class="ambient" id="ambient" aria-hidden="true"></div>
+<script>
+(function(){
+ const layer=document.getElementById("ambient");
+ const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+ // Fixed positions avoid a shifting layout and reduce paint work.
+ for(let i=0;i<24;i++){
+   const dot=document.createElement("span");dot.className="ambient-dot";
+   const x=(i*47.13+11)%100, y=(i*29.7+17)%100;
+   dot.style.setProperty("--x",x+"%");
+   dot.style.setProperty("--y",y+"%");
+   dot.style.setProperty("--size",(i%4+2)+"px");
+   dot.style.setProperty("--duration",(17+i%11)+"s");
+   dot.style.setProperty("--delay",(-i*1.9)+"s");
+   dot.style.setProperty("--drift",((i%7)-3)*16+"px");
+   layer.appendChild(dot);
+ }
+})();
+</script>
 <header class="site-header"><nav class="shell nav" aria-label="Main navigation"><a class="brand" href="/">Count<span>My</span>Words.</a><div class="nav-actions"><div class="nav-links"><a href="/">Home</a><a href="/blog.html">Blog</a><a href="/how-to-use.html">How to use</a><a href="/faq.html">FAQ</a></div><button type="button" class="theme-button" id="themeToggle" aria-label="Toggle dark and light mode">Toggle theme</button></div></nav></header>
 <main class="shell"><section class="hero"><div class="eyebrow">Free online writing tool</div><h1>Every word counts.</h1><p>Paste your writing and instantly see word counts, reading level, speaking time and more. Simple, fast and free.</p></section>
 <div class="workspace"><section class="panel" aria-labelledby="editorHeading"><h2 id="editorHeading">Your text</h2><label class="field-label" for="urlInput">Analyze text from a webpage</label><div class="url-row"><input id="urlInput" type="url" inputmode="url" placeholder="https://example.com/article" autocomplete="url"><button type="button" class="primary" id="fetchBtn">Fetch &amp; Analyze</button></div><label class="field-label" for="textInput">Write or paste text</label><textarea id="textInput" placeholder="Start typing or paste your text here..." spellcheck="true"></textarea><div class="buttons"><button type="button" class="primary" id="copyBtn">Copy results</button><button type="button" class="secondary" id="clearBtn">Clear text</button></div><p id="status" class="status" role="status" aria-live="polite"></p></section>
