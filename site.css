@@ -4,3 +4,18 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}body{overflow-x:clip}bu
 
 /* Player account entry, responsive alongside existing nav */
 .account-nav-link{display:inline-flex;align-items:center;justify-content:center;min-height:43px;padding:9px 14px;border-radius:12px;background:#f3b341;color:#29210f!important;font-size:.86rem;font-weight:800;text-decoration:none;white-space:nowrap}.account-nav-link:hover{background:#ffd278}.account-nav-link:focus-visible{outline:3px solid var(--blue);outline-offset:3px}@media(max-width:680px){.account-nav-link{padding:9px 13px;min-height:44px}}
+
+/* Reserved desktop ad columns; never overlap or narrow the content. */
+.ct-ad-rail{display:none}
+@media(min-width:1500px){
+ .ct-ad-rail{display:block;position:absolute;top:112px;width:160px;height:628px;z-index:2;border:1px solid var(--line);border-radius:10px;background:var(--surface);box-sizing:content-box}
+ .ct-ad-rail--left{left:calc((100% - 1120px)/4 - 81px)}
+ .ct-ad-rail--right{right:calc((100% - 1120px)/4 - 81px)}
+ .ct-ad-rail__label{display:block;height:26px;text-align:center;font-size:10px;line-height:26px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+ .ct-ad-rail__slot{position:relative;width:160px;height:600px}
+ .ct-ad-rail__fallback{position:absolute;inset:0;display:grid;place-content:center;text-align:center;padding:14px;color:var(--muted);font-size:12px;line-height:1.7;background:var(--input)}
+ .ct-ad-rail__fallback span{font-size:10px;opacity:.8}
+ .ct-ad-rail ins.adsbygoogle{position:relative;z-index:1}
+ .ct-ad-rail__slot:has(ins[data-ad-status="filled"]) .ct-ad-rail__fallback{display:none}
+}
+@media print{.ct-ad-rail{display:none!important}}
