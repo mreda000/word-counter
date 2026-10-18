@@ -10,11 +10,13 @@ Project: website-7c1a3. Database: `default` (Enterprise, Native Mode), location 
 - Firestore was provisioned in production mode, initially denying all client access.
 - The current firestore.rules was published successfully through Firebase Console.
 - Rules Playground: unauthenticated get denied; owner get allowed; other-user get denied; other-user create denied; owner create with extra isAdmin field and missing required fields denied.
+- Google logout returned to the signed-out form; an invalid email/password attempt was rejected with Incorrect email or password.
+- Owner update with the invalid test document was denied.
 - Local regression tests pass for bounded allowlisted records, best-score merging, account-switch cancellation, and stopped-watcher cancellation.
 
 ## Release remains blocked
 Do not merge or deploy the login feature yet. The old preview targets `(default)`, so it cannot verify saves to the newly created named database. The corrected code selects `default`. The browser could not reach the local verification server, so an end-to-end save/load test of the corrected client remains outstanding.
-Email registration/login, password reset, logout, second-browser restore, concurrent-device writes, and mobile Safari/Chrome remain unverified. Only Google sign-in was exercised successfully.
+Successful email registration/login, password reset, second-browser restore, concurrent-device writes, and mobile Safari/Chrome remain unverified. Only Google sign-in was exercised successfully.
 
 The PR title contains [skip netlify] to suppress Deploy Previews. Keep it until an explicit test-preview deployment is authorized. Commit messages also contain [skip netlify]. See https://docs.netlify.com/deploy/manage-deploys/manage-deploys-overview/#skip-a-deploy
 
