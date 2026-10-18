@@ -1,506 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta name="description" content="Count My Words - A powerful online text analysis tool that counts words, characters, sentences, and more.">
-    <meta name="keywords" content="word counter, text analysis, character count, SEO tool">
-    <meta name="author" content="CountMyWords.net">
-    <meta property="og:title" content="Count My Words - Word Counter Tool">
-    <meta property="og:description" content="Easily count words, characters, and more with Count My Words!">
-    <meta property="og:image" content="https://countmywords.net/favicon.png">
-    <meta property="og:url" content="https://countmywords.net">
-    <meta name="twitter:card" content="summary_large_image">
-
-    <link rel="icon" type="image/png" href="favicon.png">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Count My Words!</title>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4432960986920022" crossorigin="anonymous"></script>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #1d1d1f; /* Dark mode default */
-            color: #f5f5f7;
-            line-height: 1.6;
-            overflow-x: hidden;
-            position: relative;
-        }
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: #003087;
-            color: white;
-            padding: 8px 20px; /* Kept thin for sleek look */
-            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15); /* Light shadow for thin, clean look */
-            z-index: 1000;
-            animation: slideDown 0.5s ease-out; /* Faster, smoother slide-in */
-        }
-        .toolbar {
-            display: flex;
-            justify-content: space-between; /* Space between logo and links on desktop */
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            gap: 15px; /* Consistent spacing for clean alignment */
-        }
-        .toolbar a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            padding: 8px 16px; /* Kept small for thin bar */
-            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-            border-radius: 4px; /* Sharp, modern radius */
-            position: relative;
-            font-size: 14px; /* Consistent with your thin design */
-            min-width: 60px; /* Ensure minimum width for readability */
-            text-align: center; /* Center text for balance */
-        }
-        .toolbar a:hover {
-            background-color: rgba(255, 255, 255, 0.1); /* Subtle hover */
-            transform: scale(1.05); /* Smooth scale */
-            box-shadow: 0 0 12px rgba(255, 204, 0, 0.6); /* Softer yellow glow */
-        }
-        .toolbar a:after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            bottom: -4px;
-            left: 0;
-            background: #ffcc00;
-            transform: scaleX(0);
-            transform-origin: bottom right;
-            transition: transform 0.3s ease-out;
-        }
-        .toolbar a:hover:after {
-            transform: scaleX(1);
-            transform-origin: bottom left;
-        }
-        .nav-links {
-            display: flex;
-            gap: 10px; /* Tight spacing for clean look */
-            align-items: center;
-        }
-        .menu-toggle {
-            display: none; /* Hidden by default on desktop */
-            font-size: 24px; /* Smaller for mobile-friendly tap */
-            background: none;
-            border: none;
-            color: white;
-            cursor: pointer;
-            padding: 6px;
-            transition: transform 0.3s ease, color 0.3s ease;
-            min-height: 44px; /* Touch target size */
-            min-width: 44px; /* Touch target size */
-            margin-left: 10px; /* Space from content */
-        }
-        .menu-toggle:hover {
-            color: #ffcc00; /* Yellow for contrast, no rotation */
-        }
-        /* Mobile Nav (Slide-Out Menu) */
-        @media (max-width: 600px) {
-            nav {
-                padding: 8px 10px; /* Thinner padding on mobile */
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-            .toolbar {
-                width: 100%;
-                gap: 5px; /* Tighter spacing on mobile */
-            }
-            .menu-toggle {
-                display: block; /* Show hamburger on mobile */
-                position: fixed;
-                top: 10px;
-                left: 10px;
-                z-index: 1001;
-            }
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                position: fixed;
-                top: 0;
-                left: -250px; /* Start off-screen */
-                width: 250px;
-                height: 100vh;
-                background-color: #003087;
-                padding: 60px 20px 20px; /* More padding for readability */
-                box-shadow: 4px 0 15px rgba(0, 0, 0, 0.3); /* Shadow for depth */
-                transition: left 0.5s ease-out; /* Smooth slide-in */
-                z-index: 1000; /* Ensure it stays below menu-toggle */
-            }
-            .nav-links.active {
-                display: flex;
-                left: 0; /* Slide in from left */
-            }
-            .toolbar a {
-                padding: 12px 14px; /* Tighter for mobile stacking */
-                font-size: 16px; /* Larger for readability on mobile */
-                margin: 0; /* Remove margins for clean stacking */
-                min-width: 80px; /* Ensure readable width on mobile */
-            }
-            .container {
-                padding: 15px;
-                max-width: 90%;
-                margin: 10px auto 15px; /* Adjusted for no nav bar */
-            }
-            h1 { font-size: 24px; }
-            .counter { 
-                font-size: 14px; 
-                padding: 8px; 
-                font-weight: 500; 
-            }
-            button { 
-                font-size: 14px; 
-                padding: 10px; 
-                min-height: 40px; 
-            }
-            textarea, input { 
-                font-size: 14px; 
-                padding: 10px; 
-                min-height: 100px; 
-            }
-            .particle { 
-                width: 3px; 
-                height: 3px; 
-            } /* Smaller particles on mobile */
-        }
-        @media (max-width: 400px) {
-            .container { padding: 10px; }
-            h1 { font-size: 20px; }
-            .counter { font-size: 12px; padding: 6px; }
-            button { padding: 8px; font-size: 12px; }
-            textarea, input { font-size: 12px; padding: 8px; }
-            .toolbar a { 
-                padding: 10px 12px; 
-                font-size: 14px; 
-                min-width: 70px; 
-            }
-            .menu-toggle { 
-                font-size: 20px; 
-                padding: 4px; 
-            }
-            .nav-links {
-                width: 200px; /* Narrower for tiny screens */
-                padding: 50px 15px 15px; /* Tighter padding */
-            }
-        }
-        .container {
-            background: #2c2c2e;
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-            width: 100%;
-            max-width: 500px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin: 60px auto 20px; /* Adjusted for thinner nav */
-            position: relative;
-            animation: slideUp 0.8s ease-out;
-            border: 2px solid transparent;
-            box-shadow: 0 0 20px rgba(0, 122, 255, 0.6);
-            animation: glow 3s ease-in-out infinite;
-        }
-        .left, .right { width: 100%; }
-        h1 {
-            font-size: 28px;
-            font-weight: 700;
-            margin: 0 0 15px 0;
-            color: #007AFF;
-            text-align: center;
-            animation: fadeIn 1.2s ease-in;
-        }
-        textarea {
-            width: calc(100% - 20px);
-            padding: 12px;
-            border: 1px solid #3a3a3c;
-            border-radius: 12px;
-            font-size: 16px;
-            outline: none;
-            background: #3a3a3c;
-            color: #f5f5f7;
-            transition: border 0.3s ease-in-out, box-shadow 0.3s ease-in-out, transform 0.2s ease;
-            min-height: 120px;
-            resize: vertical;
-        }
-        textarea:focus {
-            border: 1px solid #007AFF;
-            box-shadow: 0 0 12px rgba(0, 122, 255, 0.7);
-            transform: scale(1.01);
-        }
-        input {
-            width: calc(100% - 20px);
-            padding: 12px;
-            border: 1px solid #3a3a3c;
-            border-radius: 12px;
-            font-size: 16px;
-            outline: none;
-            background: #3a3a3c;
-            color: #f5f5f7;
-            transition: border 0.3s ease-in-out, box-shadow 0.3s ease-in-out, transform 0.2s ease;
-        }
-        input:focus {
-            border: 1px solid #007AFF;
-            box-shadow: 0 0 12px rgba(0, 122, 255, 0.7);
-            transform: scale(1.01);
-        }
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #007AFF;
-            color: white;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background 0.3s ease-in-out, transform 0.2s ease, box-shadow 0.3s ease;
-            margin: 5px 0;
-            min-height: 44px;
-        }
-        button:hover {
-            background-color: #005ecb;
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(0, 122, 255, 0.8);
-        }
-        button:disabled {
-            background-color: #3a3a3c;
-            cursor: not-allowed;
-        }
-        .counter {
-            font-size: 16px;
-            font-weight: 500;
-            padding: 10px;
-            background: #3a3a3c;
-            border-radius: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: transform 0.3s ease, background 0.3s ease;
-            animation: fadeIn 1.5s ease-in;
-        }
-        .counter:hover {
-            transform: scale(1.03);
-            background: #444446;
-        }
-        .footer {
-            padding: 15px;
-            width: 100%;
-            background: #003087;
-            color: white;
-            text-align: center;
-            font-size: 14px;
-            border-radius: 10px 10px 0 0;
-            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2);
-            margin-top: 15px;
-            animation: slideUp 1s ease-out;
-        }
-        .footer a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            margin: 0 10px;
-            transition: color 0.3s ease, transform 0.2s ease;
-        }
-        .footer a:hover {
-            color: #ffcc00;
-            transform: scale(1.1);
-        }
-        /* Particle Animation (Background) */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(245, 245, 247, 0.3); /* Light dots on dark background */
-            border-radius: 50%;
-            animation: float 20s infinite linear;
-        }
-        /* Animation Keyframes */
-        @keyframes float {
-            0% { transform: translateY(100vh); opacity: 0; }
-            25% { opacity: 0.8; }
-            50% { opacity: 0.5; }
-            75% { opacity: 0.8; }
-            100% { transform: translateY(-100vh); opacity: 0; }
-        }
-        @keyframes glow {
-            0% { box-shadow: 0 0 15px rgba(0, 122, 255, 0.5); }
-            50% { box-shadow: 0 0 25px rgba(0, 122, 255, 0.8); }
-            100% { box-shadow: 0 0 15px rgba(0, 122, 255, 0.5); }
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        @keyframes slideDown {
-            from { transform: translateY(-50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="description" content="Free online word counter and text analyzer. Instantly count words, characters, numbers, sentences and paragraphs, estimate reading level, and calculate reading and speaking time.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Free Word Counter & Text Analyzer | CountMyWords">
+<meta property="og:description" content="Count words, characters, sentences and more instantly. Free, fast and easy to use.">
+<meta property="og:url" content="https://countmywords.net/">
+<meta property="og:image" content="https://countmywords.net/favicon.png">
+<meta name="twitter:card" content="summary">
+<link rel="canonical" href="https://countmywords.net/">
+<link rel="icon" href="/favicon.png" type="image/png">
+<title>Free Word Counter & Text Analyzer | CountMyWords</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4432960986920022" crossorigin="anonymous"></script>
+<style>
+:root{color-scheme:light;--bg:#f5f5f7;--surface:#fff;--text:#1d1d1f;--muted:#63636c;--line:#e5e5ea;--blue:#007aff;--blue-hover:#0064d2;--input:#fafafa;--shadow:0 18px 50px rgba(20,20,35,.055)}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#101114;--surface:#1c1d22;--text:#f5f5f7;--muted:#adaeb8;--line:#34353d;--blue:#69a8ff;--blue-hover:#8abaff;--input:#25262c;--shadow:0 18px 50px rgba(0,0,0,.22)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}button,textarea,input{font:inherit}a{color:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,textarea:focus-visible,input:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.shell{width:min(1120px,calc(100% - 40px));margin:auto}.site-header{background:var(--surface);border-bottom:1px solid var(--line)}.nav{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{font-weight:750;font-size:1.15rem;text-decoration:none;letter-spacing:-.04em}.brand span{color:var(--blue)}.nav-actions{display:flex;align-items:center;gap:18px}.nav-links{display:flex;gap:22px}.nav-links a{text-decoration:none;color:var(--muted);font-size:.9rem}.nav-links a:hover,.footer a:hover{color:var(--blue)}.theme-button{background:var(--input);color:var(--text);border:1px solid var(--line);border-radius:999px;padding:9px 14px;font-weight:650;font-size:.85rem}
+.hero{text-align:center;padding:66px 0 34px}.eyebrow{color:var(--blue);font-weight:700;font-size:.83rem;letter-spacing:.08em;text-transform:uppercase}.hero h1{font-size:clamp(2.4rem,5vw,4.2rem);line-height:1.1;letter-spacing:-.065em;margin:13px 0 18px}.hero p{max-width:660px;margin:auto;color:var(--muted);font-size:1.07rem}
+.workspace{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(300px,1fr);gap:20px;align-items:start}.panel{background:var(--surface);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:24px}.panel h2{font-size:1.1rem;letter-spacing:-.03em;margin:0 0 14px}.field-label{display:block;font-size:.85rem;font-weight:700;margin-bottom:8px}.url-row{display:flex;gap:10px;margin-bottom:18px}.url-row input{min-width:0;flex:1}.url-row button{white-space:nowrap}input,textarea{border:1px solid var(--line);border-radius:12px;background:var(--input);color:var(--text);padding:13px 15px;width:100%}textarea{display:block;resize:vertical;min-height:340px;line-height:1.65}.buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.primary,.secondary{border-radius:12px;padding:12px 17px;font-weight:700;border:1px solid transparent}.primary{background:var(--blue);color:#fff}.primary:hover{background:var(--blue-hover)}.secondary{background:var(--input);border-color:var(--line);color:var(--text)}.primary:disabled{opacity:.55;cursor:wait}.status{min-height:24px;color:var(--muted);font-size:.83rem;margin:10px 0 0}.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.stat{padding:17px 15px;background:var(--input);border:1px solid var(--line);border-radius:15px}.stat-label{color:var(--muted);font-size:.78rem;display:block}.stat-value{display:block;font-size:1.85rem;font-weight:760;letter-spacing:-.055em;overflow-wrap:anywhere}.stat.wide{grid-column:span 2}.stat.wide .stat-value{font-size:1.3rem}.hint{font-size:.8rem;color:var(--muted);margin:15px 0 0}.details{margin:36px auto 65px;max-width:760px}.details h2{letter-spacing:-.04em}.details p{color:var(--muted)}.footer{border-top:1px solid var(--line);padding:26px 0 38px;color:var(--muted);font-size:.85rem}.footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.footer a{margin-left:14px;text-decoration:none}
+@media(max-width:800px){.workspace{grid-template-columns:1fr}.hero{padding-top:48px}.nav-links{gap:12px}}@media(max-width:540px){.shell{width:min(100% - 24px,1120px)}.nav{flex-wrap:wrap;padding:13px 0;min-height:0}.nav-actions{width:100%;justify-content:space-between}.nav-links{gap:12px;flex-wrap:wrap}.nav-links a{font-size:.8rem}.hero{padding:40px 0 26px}.panel{padding:17px;border-radius:18px}.url-row{flex-direction:column}.url-row button{width:100%}.stats{gap:9px}.stat{padding:13px}.stat-value{font-size:1.5rem}textarea{min-height:280px}.footer a{margin-left:0;margin-right:14px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem("cmw-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}catch(e){document.documentElement.dataset.theme="light"}</script>
 </head>
 <body>
-    <nav>
-        <div class="toolbar">
-            <a href="index.html">Count My Words</a>
-            <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="blog.html">Blog</a>
-                <a href="how-to-use.html">How to Use</a>
-                <a href="faq.html">FAQ</a>
-            </div>
-            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-        </div>
-    </nav>
-
-    <div class="particles">
-        <!-- Generate 50 particles for a cooler effect -->
-        <script>
-            function createParticles(count) {
-                const particlesDiv = document.querySelector('.particles');
-                for (let i = 0; i < count; i++) {
-                    const particle = document.createElement('div');
-                    particle.className = 'particle';
-                    particle.style.left = Math.random() * 100 + 'vw';
-                    particle.style.animationDelay = Math.random() * 10 + 's';
-                    particlesDiv.appendChild(particle);
-                }
-            }
-            createParticles(50); // Increased to 50 for more particles
-        </script>
-    </div>
-
-    <div class="container">
-        <div class="left">
-            <h1>Count My Words!</h1>
-            <input type="text" id="urlInput" placeholder="Enter URL here..." />
-            <div style="display: flex; gap: 5px; flex-wrap: wrap; justify-content: center;">
-                <button onclick="fetchTextFromURL()" id="fetchBtn">Fetch & Analyze</button>
-                
-                <button onclick="copyResults()">Copy Results</button>
-            </div>
-            <textarea id="textInput" placeholder="Type or paste your text here..."></textarea>
-            <button onclick="clearText()" style="background-color: #ff3b30">Clear</button>
-        </div>
-        <div class="right">
-            <p class="counter">📖 Word Count: <span id="wordCount">0</span></p>
-            <p class="counter">🔢 Number Count: <span id="numberCount">0</span></p>
-            <p class="counter">🔤 Character Count: <span id="charCount">0</span></p>
-            <p class="counter">✍️ Sentence Count: <span id="sentenceCount">0</span></p>
-            <p class="counter">📄 Paragraph Count: <span id="paragraphCount">0</span></p>
-            <p class="counter">🎓 Reading Level: <span id="readingLevel">N/A</span></p>
-            <p class="counter">⏳ Reading Time (sec): <span id="readingTime">0</span></p>
-            <p class="counter">🗣️ Speaking Time (sec): <span id="speakingTime">0</span></p>
-        </div>
-    </div>
-
-    <div class="footer">
-        <p><a href="About.html">About Us</a> | <a href="privacy.html">Privacy Policy</a></p>
-    </div>
-
-    <script>
-        function debounce(func, wait) {
-            let timeout;
-            return function (...args) {
-                clearTimeout(timeout);
-                timeout = setTimeout(() => func.apply(this, args), wait);
-            };
-        }
-
-        function analyzeText() {
-            const text = document.getElementById("textInput").value;
-            const words = text.trim().split(/\s+/).filter(word => word.length > 0);
-            const numbers = text.match(/\b\d+\b/g) || [];
-            const characters = text.length;
-            const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0);
-            const paragraphs = text.split(/\n+/).filter(p => p.trim().length > 0);
-            const readingLevel = text.trim() ? Math.round(0.39 * (words.length / sentences.length) + 11.8 * (syllables(text) / words.length) - 15.59) : "N/A";
-            const readingTime = Math.round(words.length / 200);
-            const speakingTime = Math.round(words.length / 130);
-
-            document.getElementById("wordCount").textContent = words.length;
-            document.getElementById("numberCount").textContent = numbers.length;
-            document.getElementById("charCount").textContent = characters;
-            document.getElementById("sentenceCount").textContent = sentences.length;
-            document.getElementById("paragraphCount").textContent = paragraphs.length;
-            document.getElementById("readingLevel").textContent = readingLevel;
-            document.getElementById("readingTime").textContent = readingTime;
-            document.getElementById("speakingTime").textContent = speakingTime;
-        }
-
-        function syllables(text) {
-            return text.toLowerCase().split(/\s+/).reduce((count, word) => {
-                return count + (word.match(/[aeiouy]+/g) || []).length || 1;
-            }, 0);
-        }
-
-        async function fetchTextFromURL() {
-            const url = document.getElementById("urlInput").value.trim();
-            const fetchBtn = document.getElementById("fetchBtn");
-            if (!url) return alert("Please enter a valid URL");
-            fetchBtn.disabled = true;
-            fetchBtn.textContent = "Fetching...";
-            try {
-                const response = await fetch(url);
-                if (!response.ok) throw new Error("Failed to fetch URL");
-                const text = await response.text();
-                document.getElementById("textInput").value = text;
-                analyzeText();
-            } catch (error) {
-                alert("Error fetching URL: " + error.message);
-            } finally {
-                fetchBtn.disabled = false;
-                fetchBtn.textContent = "Fetch & Analyze";
-            }
-        }
-
-        function clearText() {
-            document.getElementById("textInput").value = "";
-            analyzeText();
-        }
-
-        function copyResults() {
-            const results = `
-Word Count: ${document.getElementById("wordCount").textContent}
-Number Count: ${document.getElementById("numberCount").textContent}
-Character Count: ${document.getElementById("charCount").textContent}
-Sentence Count: ${document.getElementById("sentenceCount").textContent}
-Paragraph Count: ${document.getElementById("paragraphCount").textContent}
-Reading Level: ${document.getElementById("readingLevel").textContent}
-Reading Time: ${document.getElementById("readingTime").textContent} sec
-Speaking Time: ${document.getElementById("speakingTime").textContent} sec
-            `.trim();
-            navigator.clipboard.writeText(results).then(() => alert("Results copied to clipboard!"));
-        }
-
-        function toggleDarkMode() {
-            document.body.classList.toggle("dark-mode");
-        }
-
-        function toggleMenu() {
-            const navLinks = document.querySelector(".nav-links");
-            navLinks.classList.toggle("active");
-            // Ensure body doesn't scroll when menu is open
-            document.body.classList.toggle("no-scroll", navLinks.classList.contains("active"));
-        }
-
-        document.getElementById("textInput").addEventListener("input", debounce(analyzeText, 300));
-    </script>
-</body>
-</html>
+<header class="site-header"><nav class="shell nav" aria-label="Main navigation"><a class="brand" href="/">Count<span>My</span>Words.</a><div class="nav-actions"><div class="nav-links"><a href="/">Home</a><a href="/blog.html">Blog</a><a href="/how-to-use.html">How to use</a><a href="/faq.html">FAQ</a></div><button type="button" class="theme-button" id="themeToggle" aria-label="Toggle dark and light mode">Toggle theme</button></div></nav></header>
+<main class="shell"><section class="hero"><div class="eyebrow">Free online writing tool</div><h1>Every word counts.</h1><p>Paste your writing and instantly see word counts, reading level, speaking time and more. Simple, fast and free.</p></section>
+<div class="workspace"><section class="panel" aria-labelledby="editorHeading"><h2 id="editorHeading">Your text</h2><label class="field-label" for="urlInput">Analyze text from a webpage</label><div class="url-row"><input id="urlInput" type="url" inputmode="url" placeholder="https://example.com/article" autocomplete="url"><button type="button" class="primary" id="fetchBtn">Fetch &amp; Analyze</button></div><label class="field-label" for="textInput">Write or paste text</label><textarea id="textInput" placeholder="Start typing or paste your text here..." spellcheck="true"></textarea><div class="buttons"><button type="button" class="primary" id="copyBtn">Copy results</button><button type="button" class="secondary" id="clearBtn">Clear text</button></div><p id="status" class="status" role="status" aria-live="polite"></p></section>
+<section class="panel" aria-labelledby="resultsHeading"><h2 id="resultsHeading">Live analysis</h2><div class="stats" aria-live="off"><div class="stat"><span class="stat-label">Words</span><strong class="stat-value" id="wordCount">0</strong></div><div class="stat"><span class="stat-label">Characters</span><strong class="stat-value" id="charCount">0</strong></div><div class="stat"><span class="stat-label">Numbers</span><strong class="stat-value" id="numberCount">0</strong></div><div class="stat"><span class="stat-label">Sentences</span><strong class="stat-value" id="sentenceCount">0</strong></div><div class="stat"><span class="stat-label">Paragraphs</span><strong class="stat-value" id="paragraphCount">0</strong></div><div class="stat"><span class="stat-label">Reading time</span><strong class="stat-value" id="readingTime">0 sec</strong></div><div class="stat"><span class="stat-label">Speaking time</span><strong class="stat-value" id="speakingTime">0 sec</strong></div><div class="stat wide"><span class="stat-label">Estimated reading grade (English)</span><strong class="stat-value" id="readingLevel">N/A</strong></div></div><p class="hint">Estimates are approximate. Reading time uses 200 words/minute; speaking time uses 130 words/minute.</p></section></div>
+<section class="details"><h2>A clearer picture of your writing.</h2><p>CountMyWords helps students, writers and professionals check length and readability without installing anything. Your typed text is analyzed in your browser. URL fetching depends on whether the source website permits browser access.</p></section></main>
+<footer class="footer"><div class="shell footer-inner"><span>© <span id="year"></span> CountMyWords.net</span><div><a href="/About.html">About</a><a href="/Privacy.html">Privacy</a></div></div></footer>
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const editor=$("textInput"),status=$("status");
+const setStatus=message=>{status.textContent=message};
+function countSyllables(word){const cleaned=word.toLowerCase().replace(/[^a-z]/g,"");if(!cleaned)return 0;const groups=cleaned.replace(/e$/,"").match(/[aeiouy]+/g);return Math.max(1,groups?groups.length:1)}
+function formatDuration(seconds){if(!seconds)return "0 sec";if(seconds<60)return Math.max(1,Math.round(seconds))+" sec";const minutes=Math.floor(seconds/60),remaining=Math.round(seconds%60);return remaining?minutes+" min "+remaining+" sec":minutes+" min"}
+function analyzeText(){
+ const text=editor.value,words=text.trim()?text.trim().split(/\s+/):[];
+ const numbers=text.match(/\b\d+\b/g)||[];
+ const sentences=text.trim()?text.split(/[.!?]+/).filter(s=>s.trim().length):[];
+ const paragraphs=text.split(/\n\s*\n|\n+/).filter(p=>p.trim().length);
+ const englishWords=words.map(w=>w.replace(/[^A-Za-z]/g,"")).filter(Boolean);
+ let grade="N/A";
+ if(englishWords.length&&sentences.length){const syllables=englishWords.reduce((n,w)=>n+countSyllables(w),0);const score=.39*(englishWords.length/sentences.length)+11.8*(syllables/englishWords.length)-15.59;grade=String(Math.max(0,Math.round(score)))}
+ const values={wordCount:words.length,numberCount:numbers.length,charCount:text.length,sentenceCount:sentences.length,paragraphCount:paragraphs.length,readingLevel:grade,readingTime:formatDuration(words.length/200*60),speakingTime:formatDuration(words.length/130*60)};
+ Object.entries(values).forEach(([id,value])=>$(id).textContent=value);
+}
+async function fetchTextFromURL(){
+ const raw=$("urlInput").value.trim();let url;
+ try{url=new URL(raw);if(!["https:","http:"].includes(url.protocol))throw Error("Only HTTP and HTTPS links are supported.");}catch(e){setStatus("Enter a valid http:// or https:// URL.");return}
+ const btn=$("fetchBtn");btn.disabled=true;btn.textContent="Fetching…";setStatus("");
+ try{const response=await fetch(url.href);if(!response.ok)throw Error("HTTP "+response.status);const type=response.headers.get("content-type")||"";if(!/text\/html|text\/plain|application\/xhtml\+xml/i.test(type))throw Error("This URL does not return a supported text page.");const body=await response.text();if(/html|xhtml/i.test(type)){const doc=new DOMParser().parseFromString(body,"text/html");doc.querySelectorAll("script,style,noscript,nav,footer,header").forEach(el=>el.remove());editor.value=(doc.querySelector("main,article")||doc.body).textContent.replace(/\s+/g," ").trim()}else{editor.value=body}analyzeText();setStatus("Webpage text loaded.")}
+ catch(e){setStatus("Unable to fetch this webpage. Many websites block browser requests (CORS). Try copying the article text instead.")}
+ finally{btn.disabled=false;btn.textContent="Fetch & Analyze"}
+}
+async function copyResults(){const labels=[["Words","wordCount"],["Numbers","numberCount"],["Characters","charCount"],["Sentences","sentenceCount"],["Paragraphs","paragraphCount"],["Reading grade","readingLevel"],["Reading time","readingTime"],["Speaking time","speakingTime"]];const result=labels.map(([label,id])=>label+": "+$(id).textContent).join("\n");try{await navigator.clipboard.writeText(result);setStatus("Results copied to clipboard.")}catch(e){setStatus("Copy failed. Please check clipboard permissions.")}}
+function toggleDarkMode(){const next=document.documentElement.dataset.theme==="dark"?"light":"dark";document.documentElement.dataset.theme=next;try{localStorage.setItem("cmw-theme",next)}catch(e){}updateThemeButton()}
+function updateThemeButton(){$("themeToggle").textContent=document.documentElement.dataset.theme==="dark"?"☀ Light mode":"☾ Dark mode"}
+editor.addEventListener("input",analyzeText);$("fetchBtn").addEventListener("click",fetchTextFromURL);$("copyBtn").addEventListener("click",copyResults);$("clearBtn").addEventListener("click",()=>{editor.value="";analyzeText();setStatus("Text cleared.");editor.focus()});$("themeToggle").addEventListener("click",toggleDarkMode);$("year").textContent=new Date().getFullYear();updateThemeButton();analyzeText();
+</script>
+</body></html>
