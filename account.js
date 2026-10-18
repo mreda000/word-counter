@@ -24,5 +24,5 @@ $("accountForm").addEventListener("submit",e=>{e.preventDefault();if(!services)r
 $("googleLogin").addEventListener("click",()=>{if(!services)return;run(async()=>{const provider=new services.auth.GoogleAuthProvider();await services.auth.signInWithPopup(services.userAuth,provider)})});
 $("resetPassword").addEventListener("click",()=>{if(!services)return;const email=$("playerEmail").value.trim();if(!email){tell("Enter your email address first.");return}run(async()=>{await services.auth.sendPasswordResetEmail(services.userAuth,email);tell("If your address is registered, check your email for a reset link.")})});
 $("logoutBtn").addEventListener("click",()=>{if(services)run(()=>services.auth.signOut(services.userAuth))});
-$("syncNow").addEventListener("click",()=>{const u=services?.userAuth.currentUser;if(!u)return;run(async()=>{const r=await syncProgress(u);$("syncLabel").textContent="Saved to cloud";tell(r.count+" game records synced.")})});
+$("syncNow").addEventListener("click",()=>{const u=services?.userAuth.currentUser;if(!u)return;run(async()=>{const r=await syncProgress(u);if(!r.synced||services.userAuth.currentUser?.uid!==u.uid)return;$("syncLabel").textContent="Saved to cloud";tell(r.count+" game records synced.")})});
 init();

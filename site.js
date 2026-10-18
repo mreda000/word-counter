@@ -2,5 +2,5 @@
 // Optional account entry and cloud progress syncing. Guest games still work when Firebase isn't configured.
 (()=>{const nav=document.querySelector(".nav-actions");if(!nav)return;const a=document.createElement("a");a.href="/account.html";a.textContent="Sign in";a.className="account-nav-link";a.setAttribute("aria-label","Player account and sign in");nav.append(a);
 import("/firebase-client.js").then(async client=>{if(!client.available)return;const {getServices}=client;const s=await getServices();const progress=await import("/player-progress.js");let stop=()=>{};
-s.auth.onAuthStateChanged(s.userAuth,user=>{stop();stop=()=>{};a.textContent=user?"My account":"Sign in";if(user)stop=progress.watchProgress(user)});
+s.auth.onAuthStateChanged(s.userAuth,user=>{stop();stop=()=>{};a.textContent=user?"My account":"Sign in";if(user&&!document.getElementById("accountForm"))stop=progress.watchProgress(user)});
 }).catch(()=>{/* Never block navigation or guest play if Firebase is unreachable. */});})();

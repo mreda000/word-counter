@@ -9,7 +9,7 @@ export async function getServices(){
  if(!instance)instance=(async()=>{
   const [{initializeApp,getApps,getApp},auth,db]=await Promise.all([import(base+"firebase-app.js"),import(base+"firebase-auth.js"),import(base+"firebase-firestore.js")]);
   const app=getApps().length?getApp():initializeApp(firebaseConfig);
-  return {app,auth,db,userAuth:auth.getAuth(app),firestore:db.getFirestore(app)};
+  return {app,auth,db,userAuth:auth.getAuth(app),firestore:db.getFirestore(app,"default")};
  })();
  return instance;
 }
