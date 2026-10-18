@@ -4,7 +4,7 @@ const frameEl=$("chickenFrame"),overlay=$("chickenOverlay"),startButton=$("chick
 const scene=new THREE.Scene();scene.background=new THREE.Color(0xa8d9f7);scene.fog=new THREE.Fog(0xa8d9f7,38,115);
 const camera=new THREE.PerspectiveCamera(76,1,.08,150);
 const renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:"high-performance"});
-renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;
+renderer.setPixelRatio(Math.min(devicePixelRatio||1,((('ontouchstart' in window)||navigator.maxTouchPoints>0)?1.35:2)));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;
 renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.35;
 frameEl.prepend(renderer.domElement);
 scene.add(new THREE.HemisphereLight(0xf4faff,0x70904b,2.3));
