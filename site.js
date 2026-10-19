@@ -36,3 +36,6 @@ s.auth.onAuthStateChanged(s.userAuth,user=>{stop();stop=()=>{};a.textContent=use
  }
  load();wide.addEventListener("change",load);
 })();
+
+// GA4 is shared by all pages that load the site's common JavaScript.
+(()=>{if(document.querySelector('script[data-chickentask-analytics]'))return;const s=document.createElement('script');s.src='/analytics.js';s.defer=true;s.dataset.chickentaskAnalytics='';document.head.appendChild(s)})();
