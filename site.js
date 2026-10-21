@@ -11,7 +11,7 @@ s.auth.onAuthStateChanged(s.userAuth,user=>{stop();stop=()=>{};a.textContent=use
  const path=location.pathname.replace(/\.html$/,"").replace(/\/$/,"")||"/";
  if(!allowed.has(path)||document.querySelector(".ct-ad-rail"))return;
  const wide=matchMedia("(min-width:1700px)");
- const main=document.querySelector("main");
+ const main=document.querySelector("main .shell")||document.querySelector("main");
  if(!main)return;
  const rails=[];
  for(const side of ["left","right"]){
