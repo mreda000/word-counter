@@ -19,3 +19,13 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}body{overflow-x:clip}bu
  .ct-ad-rail__slot:has(ins[data-ad-status="filled"]) .ct-ad-rail__fallback{display:none}
 }
 @media print{.ct-ad-rail{display:none!important}}
+
+/* Safe manual ad rails: utility pages only; JS verifies at least 120px of
+   horizontal clearance from the main content before displaying either rail. */
+@media(min-width:1700px){
+ .ct-ad-rail{display:none;position:absolute;top:112px;width:160px;height:628px;z-index:1;border:1px solid var(--line);border-radius:10px;background:var(--surface);box-sizing:content-box}
+ .ct-ad-rail--left{left:20px}
+ .ct-ad-rail--right{right:20px}
+ .ct-ad-rail__label{display:block;height:26px;text-align:center;font-size:10px;line-height:26px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+ .ct-ad-rail__slot{width:160px;height:600px}
+}
