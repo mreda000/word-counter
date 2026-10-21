@@ -29,3 +29,12 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}body{overflow-x:clip}bu
  .ct-ad-rail__label{display:block;height:26px;text-align:center;font-size:10px;line-height:26px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
  .ct-ad-rail__slot{width:160px;height:600px}
 }
+
+/* Responsive ads follow the entire main content; never overlay controls. */
+.ct-responsive-ad{display:none;position:relative;z-index:1;width:min(100% - 32px,728px);margin:0 auto 40px;padding:14px 12px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface);overflow:hidden}
+.ct-responsive-ad__label{text-align:center;color:var(--muted);font-size:11px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
+.ct-responsive-ad__slot{width:100%;min-width:0;text-align:center}
+.ct-responsive-ad ins.adsbygoogle{max-width:100%}
+@media(max-width:1699px){.ct-responsive-ad{display:block}.ct-ad-rail{display:none!important}}
+@media(max-width:680px){.ct-responsive-ad{width:calc(100% - 24px);margin-bottom:28px;padding:12px 8px}}
+@media print{.ct-responsive-ad{display:none!important}}
