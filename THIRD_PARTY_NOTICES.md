@@ -39,3 +39,23 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 Note: Review this inventory when new libraries, media assets, or dependencies are introduced.
+
+
+## Everyday tools (prepared October 21, 2026)
+
+Original application code, page copy and CSS chicken illustration were written for ChickenTask. No competitor layouts, logos, music or photographs are used as product assets. The timer is called Focus Timer; no Pomodoro branding is used. Generic format names describe compatibility only.
+
+- Tesseract.js 6.0.1 and tesseract.js-core 6.1.2: Apache-2.0, with embedded third-party notices.
+- English traineddata: @tesseract.js-data/eng 1.0.0, derived from Tesseract language data; upstream Apache-2.0 license is in languages/LICENSE.
+- pdf-lib 1.17.1: MIT; its dependency notices are preserved. No optional fontkit package is used.
+- PDF.js 4.10.38: Apache-2.0; standard-font and CMap notices remain beside those resources.
+
+Full copied notices: vendor/everyday/licenses. Exact npm versions: vendor/everyday/dependency-inventory.json and package-lock.json.
+
+## Additional OCR component acknowledgements
+
+This software is based in part on the work of the Independent JPEG Group.
+
+The Graphics Interchange Format(c) is the Copyright property of CompuServe Incorporated. GIF(sm) is a Service Mark property of CompuServe Incorporated.
+
+Leptonica copyright and redistribution terms: vendor/everyday/licenses/ocr-core-leptonica/leptonica-license.txt. isarray MIT terms: vendor/everyday/licenses/isarray/README.md. These were added during the follow-up review before publication.

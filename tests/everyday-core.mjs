@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import {percentage,remainingSeconds,validDuration} from '../everyday-core.js';
+assert.equal(percentage('of',20,80).value,16);
+assert.equal(percentage('share',1,4).result,'25%');
+assert.equal(percentage('change',80,100).value,25);
+assert.equal(percentage('change',100,80).label,'Decrease');
+assert.equal(percentage('discount',80,20).value,64);
+assert.equal(percentage('discount',80,100).value,0);
+for(const args of [['share',1,0],['change',0,1],['change',-5,3],['discount',-1,20],['discount',10,101],['of',Infinity,2],['of',NaN,3]])assert.throws(()=>percentage(...args));
+assert.equal(percentage('of',0,0).value,0);
+assert.equal(remainingSeconds(30000,0),30);
+assert.equal(remainingSeconds(30000,29500),1);
+assert.equal(remainingSeconds(30000,90000),0);
+assert.equal(validDuration(25,180),25);
+for(const v of [0,-1,1.5,'',181])assert.throws(()=>validDuration(v,180));
+console.log('Everyday calculation and timer boundary checks passed.');

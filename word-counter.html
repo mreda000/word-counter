@@ -95,4 +95,4 @@ function toggleDarkMode(){const next=document.documentElement.dataset.theme==="d
 function updateThemeButton(){$("themeToggle").textContent=document.documentElement.dataset.theme==="dark"?"☀ Light mode":"☾ Dark mode"}
 editor.addEventListener("input",analyzeText);$("fetchBtn").addEventListener("click",fetchTextFromURL);$("copyBtn").addEventListener("click",copyResults);$("clearBtn").addEventListener("click",()=>{editor.value="";analyzeText();setStatus("Text cleared.");editor.focus()});$("themeToggle").addEventListener("click",toggleDarkMode);$("year").textContent=new Date().getFullYear();updateThemeButton();analyzeText();
 </script>
-</body></html>
+<script type="module">if(new URLSearchParams(location.search).get('source')==='image-to-text'){try{const text=sessionStorage.getItem('ct-ocr-transfer');sessionStorage.removeItem('ct-ocr-transfer');if(text!==null){const input=document.getElementById('textInput');input.value=text;input.dispatchEvent(new Event('input',{bubbles:true}));}}catch{}}</script></body></html>
