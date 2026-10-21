@@ -7,8 +7,8 @@ s.auth.onAuthStateChanged(s.userAuth,user=>{stop();stop=()=>{};a.textContent=use
 
 // Keep manual ads on utility pages only, away from game controls.
 (()=>{
- const allowed=new Set(["/","/word-counter","/image-compressor","/qr-code-generator","/grade-calculator","/spin-the-wheel","/random-team-generator","/gaming-name-generator","/tools","/blog","/faq","/how-to-use"]);
- const path=location.pathname.replace(/\\.html$/,"").replace(/\\/$/,"")||"/";
+ const allowed=new Set(["/","/word-counter","/image-compressor","/qr-code-generator","/grade-calculator","/random-team-generator","/gaming-name-generator","/tools","/blog","/faq","/how-to-use"]);
+ const path=location.pathname.replace(/\.html$/,"").replace(/\/$/,"")||"/";
  if(!allowed.has(path)||document.querySelector(".ct-ad-rail"))return;
  const wide=matchMedia("(min-width:1700px)");
  const main=document.querySelector("main");
