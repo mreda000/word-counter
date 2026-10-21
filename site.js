@@ -10,6 +10,28 @@ s.auth.onAuthStateChanged(s.userAuth,user=>{stop();stop=()=>{};a.textContent=use
  const allowed=new Set(["/","/word-counter","/image-compressor","/qr-code-generator","/grade-calculator","/random-team-generator","/gaming-name-generator","/tools","/blog","/faq","/how-to-use"]);
  const path=location.pathname.replace(/\.html$/,"").replace(/\/$/,"")||"/";
  if(!allowed.has(path)||document.querySelector(".ct-ad-rail"))return;
+ // A dedicated responsive unit appears after the main content on phones/tablets.
+ // Keep the slot outside tools, forms and interactive controls.
+ const narrow=matchMedia("(max-width:1699px)");
+ const mainContainer=document.querySelector("main");
+ if(mainContainer){
+  const wrap=document.createElement("aside");
+  wrap.className="ct-responsive-ad";wrap.setAttribute("aria-label","Advertisement");
+  const heading=document.createElement("div");heading.className="ct-responsive-ad__label";heading.textContent="Advertisement";
+  const slot=document.createElement("div");slot.className="ct-responsive-ad__slot";
+  wrap.append(heading,slot);mainContainer.insertAdjacentElement("afterend",wrap);
+  let loaded=false;
+  function loadResponsive(){
+   if(!narrow.matches||loaded)return;
+   loaded=true;
+   const ad=document.createElement("ins");ad.className="adsbygoogle";
+   ad.style.display="block";ad.dataset.adClient="ca-pub-4432960986920022";
+   ad.dataset.adSlot="4311141403";ad.dataset.adFormat="auto";
+   ad.dataset.fullWidthResponsive="true";slot.append(ad);
+   try{(window.adsbygoogle=window.adsbygoogle||[]).push({})}catch(e){}
+  }
+  loadResponsive();narrow.addEventListener("change",loadResponsive);
+ }
  const wide=matchMedia("(min-width:1700px)");
  const main=document.querySelector("main .shell")||document.querySelector("main");
  if(!main)return;
