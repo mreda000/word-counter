@@ -5,37 +5,9 @@ import("/firebase-client.js").then(async client=>{if(!client.available)return;co
 s.auth.onAuthStateChanged(s.userAuth,user=>{stop();stop=()=>{};a.textContent=user?"My account":"Sign in";if(user&&!document.getElementById("accountForm"))stop=progress.watchProgress(user)});
 }).catch(()=>{/* Never block navigation or guest play if Firebase is unreachable. */});})();
 
-// Reserve side ad spaces on wide displays, including when no advertiser fills a slot.
-(()=>{
- if(document.getElementById("accountForm")||document.querySelector(".ct-ad-rail"))return;
- const wide=matchMedia("(min-width:1500px)");
- const slots=[];
- for(const side of ["left","right"]){
-  const rail=document.createElement("aside");
-  rail.className="ct-ad-rail ct-ad-rail--"+side;
-  rail.setAttribute("aria-label",side==="left"?"Left advertisement":"Right advertisement");
-  rail.setAttribute("google-side-rail-overlap","false");
-  const label=document.createElement("span");label.className="ct-ad-rail__label";label.textContent="Advertisement";
-  const holder=document.createElement("div");holder.className="ct-ad-rail__slot";
-  const fallback=document.createElement("div");fallback.className="ct-ad-rail__fallback";
-  fallback.append(document.createTextNode("Advertisement space"));
-  const note=document.createElement("span");note.textContent="Ads may not be available";fallback.append(note);
-  holder.append(fallback);rail.append(label,holder);document.body.append(rail);slots.push(holder);
- }
- let initialized=false;
- function load(){
-  if(!wide.matches||initialized)return;
-  initialized=true;
-  for(const holder of slots){
-   const ad=document.createElement("ins");ad.className="adsbygoogle";
-   ad.style.cssText="display:inline-block;width:160px;height:600px";
-   ad.dataset.adClient="ca-pub-4432960986920022";ad.dataset.adSlot="4311141403";
-   holder.append(ad);
-   try{(window.adsbygoogle=window.adsbygoogle||[]).push({})}catch(e){/* Keep the reserved space if ads are unavailable. */}
-  }
- }
- load();wide.addEventListener("change",load);
-})();
+// Manual side-rail ad units are intentionally disabled until live layout and
+// gameplay click-safety testing confirms sufficient separation. AdSense Auto
+// ads and page-level tags should be reviewed separately in AdSense settings.
 
 // GA4 is shared by all pages that load the site's common JavaScript.
 (()=>{if(document.querySelector('script[data-chickentask-analytics]'))return;const s=document.createElement('script');s.src='/analytics.js';s.defer=true;s.dataset.chickentaskAnalytics='';document.head.appendChild(s)})();
