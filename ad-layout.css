@@ -1,0 +1,17 @@
+/* Normal-flow bottom unit plus optional non-sticky desktop side units.
+   These rules never style Google's Auto ads or their iframe contents. */
+.ct-ad-placement{box-sizing:border-box;z-index:1;color:var(--muted)}
+.ct-ad-placement[hidden]{display:none!important}
+.ct-ad-panel{box-sizing:border-box;background:var(--surface);border:1px solid var(--line);border-radius:8px}
+.ct-ad-label{box-sizing:border-box;height:28px;line-height:28px;text-align:center;font:10px/28px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;letter-spacing:.06em;text-transform:uppercase}
+.ct-ad-slot{box-sizing:border-box;min-width:0;line-height:0}
+.ct-ad-placement--side-left,.ct-ad-placement--side-right{position:absolute;width:162px;height:630px}
+.ct-ad-placement--side-left{left:16px}
+.ct-ad-placement--side-right{right:16px}
+.ct-ad-placement--side-left .ct-ad-slot,.ct-ad-placement--side-right .ct-ad-slot{width:160px;height:600px}
+/* Use padding, not collapsing margins, for the 160px control clearance.
+   No fixed-position banners, clipping, or fixed-height responsive container. */
+.ct-ad-placement--bottom{position:relative;width:calc(100% - 32px);max-width:970px;margin:0 auto;padding:160px 0 48px}
+.ct-ad-placement--bottom .ct-ad-panel{width:100%;padding:0 8px 8px}
+.ct-ad-placement--bottom .ct-ad-slot{width:100%;min-height:100px}
+@media print{.ct-ad-placement{display:none!important}}
