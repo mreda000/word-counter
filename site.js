@@ -5,61 +5,9 @@ import("/firebase-client.js").then(async client=>{if(!client.available)return;co
 s.auth.onAuthStateChanged(s.userAuth,user=>{stop();stop=()=>{};a.textContent=user?"My account":"Sign in";if(user&&!document.getElementById("accountForm"))stop=progress.watchProgress(user)});
 }).catch(()=>{/* Never block navigation or guest play if Firebase is unreachable. */});})();
 
-// Keep manual ads on utility pages only, away from game controls.
-(()=>{
- const allowed=new Set(["/","/word-counter","/image-compressor","/qr-code-generator","/grade-calculator","/random-team-generator","/gaming-name-generator","/tools","/blog","/faq","/how-to-use"]);
- const path=location.pathname.replace(/\.html$/,"").replace(/\/$/,"")||"/";
- if(!allowed.has(path)||document.querySelector(".ct-ad-rail"))return;
- // A dedicated responsive unit appears after the main content on phones/tablets.
- // Keep the slot outside tools, forms and interactive controls.
- const narrow=matchMedia("(max-width:1699px)");
- const mainContainer=document.querySelector("main");
- if(mainContainer){
-  const wrap=document.createElement("aside");
-  wrap.className="ct-responsive-ad";wrap.setAttribute("aria-label","Advertisement");
-  const heading=document.createElement("div");heading.className="ct-responsive-ad__label";heading.textContent="Advertisement";
-  const slot=document.createElement("div");slot.className="ct-responsive-ad__slot";
-  wrap.append(heading,slot);mainContainer.insertAdjacentElement("afterend",wrap);
-  let loaded=false;
-  function loadResponsive(){
-   if(!narrow.matches||loaded)return;
-   loaded=true;
-   const ad=document.createElement("ins");ad.className="adsbygoogle";
-   ad.style.display="block";ad.dataset.adClient="ca-pub-4432960986920022";
-   ad.dataset.adSlot="4311141403";ad.dataset.adFormat="auto";
-   ad.dataset.fullWidthResponsive="true";slot.append(ad);
-   try{(window.adsbygoogle=window.adsbygoogle||[]).push({})}catch(e){}
-  }
-  loadResponsive();narrow.addEventListener("change",loadResponsive);
- }
- const wide=matchMedia("(min-width:1700px)");
- const main=document.querySelector("main .shell")||document.querySelector("main");
- if(!main)return;
- const rails=[];
- for(const side of ["left","right"]){
-  const rail=document.createElement("aside");rail.className="ct-ad-rail ct-ad-rail--"+side;
-  rail.setAttribute("aria-label","Advertisement");
-  const label=document.createElement("span");label.className="ct-ad-rail__label";label.textContent="Advertisement";
-  const holder=document.createElement("div");holder.className="ct-ad-rail__slot";
-  rail.append(label,holder);document.body.append(rail);rails.push({rail,holder});
- }
- let initialized=false;
- function refresh(){
-  const rect=main.getBoundingClientRect();
-  const safe=wide.matches&&rect.left>=300&&(innerWidth-rect.right)>=300;
-  for(const {rail} of rails)rail.style.display=safe?"block":"none";
-  if(!safe||initialized)return;
-  initialized=true;
-  for(const {holder} of rails){
-   const ad=document.createElement("ins");ad.className="adsbygoogle";
-   ad.style.cssText="display:inline-block;width:160px;height:600px";
-   ad.dataset.adClient="ca-pub-4432960986920022";ad.dataset.adSlot="4311141403";
-   holder.append(ad);
-   try{(window.adsbygoogle=window.adsbygoogle||[]).push({})}catch(e){}
-  }
- }
- refresh();wide.addEventListener("change",refresh);addEventListener("resize",refresh,{passive:true});
-})();
+// Manual placement layout: optional side units plus a bottom unit at all widths.
+// Auto ads and consent messages remain controlled by the AdSense account.
+(()=>{if(document.querySelector('script[data-ct-ad-layout]'))return;const s=document.createElement('script');s.src='/ad-layout.js?v=20261024';s.defer=true;s.dataset.ctAdLayout='';document.head.appendChild(s)})();
 
 // GA4 is shared by all pages that load the site's common JavaScript.
 (()=>{if(document.querySelector('script[data-chickentask-analytics]'))return;const s=document.createElement('script');s.src='/analytics.js';s.defer=true;s.dataset.chickentaskAnalytics='';document.head.appendChild(s)})();
