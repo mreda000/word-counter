@@ -38,3 +38,14 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}body{overflow-x:clip}bu
 @media(max-width:1699px){.ct-responsive-ad{display:block}.ct-ad-rail{display:none!important}}
 @media(max-width:680px){.ct-responsive-ad{width:calc(100% - 24px);margin-bottom:28px;padding:12px 8px}}
 @media print{.ct-responsive-ad{display:none!important}}
+
+/* Privacy choices are available without interrupting games. */
+.privacy-link{font:inherit;color:inherit;background:none;border:0;padding:0;text-decoration:underline;cursor:pointer}
+.privacy-dialog{box-sizing:border-box;width:min(620px,calc(100% - 32px));max-height:85vh;overflow:auto;border:1px solid var(--line);border-radius:16px;background:var(--surface);color:var(--text);padding:24px;line-height:1.6}
+.privacy-dialog::backdrop{background:rgba(0,0,0,.6)}
+.privacy-dialog button{font:inherit;padding:10px 14px;border:1px solid var(--line);border-radius:9px;background:var(--input);color:var(--text);cursor:pointer}
+.privacy-actions{display:flex;gap:10px;flex-wrap:wrap}
+.privacy-dialog button:focus-visible,.privacy-link:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.game-guide{margin-top:28px;text-align:left;line-height:1.7}
+.game-guide h2{margin-top:0}.game-guide h3{margin-top:24px}.game-guide li+li{margin-top:8px}
+
