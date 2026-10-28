@@ -7,7 +7,8 @@ s.auth.onAuthStateChanged(s.userAuth,user=>{stop();stop=()=>{};a.textContent=use
 
 // Manual placement layout: optional side units plus a bottom unit at all widths.
 // Auto ads and consent messages remain controlled by the AdSense account.
-(()=>{if(document.querySelector('script[data-ct-ad-layout]'))return;const s=document.createElement('script');s.src='/ad-layout.js?v=20261024';s.defer=true;s.dataset.ctAdLayout='';document.head.appendChild(s)})();
+(()=>{if(document.querySelector('script[data-ct-ad-layout]'))return;const s=document.createElement('script');s.src='/ad-layout.js?v=20261028';s.defer=true;s.dataset.ctAdLayout='';document.head.appendChild(s)})();
 
 // GA4 is shared by all pages that load the site's common JavaScript.
-(()=>{if(document.querySelector('script[data-chickentask-analytics]'))return;const s=document.createElement('script');s.src='/analytics.js';s.defer=true;s.dataset.chickentaskAnalytics='';document.head.appendChild(s)})();
+(()=>{if(document.querySelector('script[data-chickentask-analytics]'))return;const s=document.createElement('script');s.src='/analytics.js?v=20261028';s.defer=true;s.dataset.chickentaskAnalytics='';document.head.appendChild(s)})();
+

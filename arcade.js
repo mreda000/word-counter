@@ -47,7 +47,7 @@ function reaction(){
  let state="ready",timeout=null,began=0,trials=[],best=Number(stored("cmw-reaction-best"))||0;
  const scores=node("div","","scoreline"),bestText=node("span"),average=node("span","Average: —");scores.append(bestText,average);
  const tap=button("Start test",clicked);tap.className="reaction-button ready";
- const msg=message();root.replaceChildren(scores,tap,msg);bestText.textContent="Personal best: "+(best?best+" ms":"—");msg.textContent="Complete up to five rounds per session.";
+ const msg=message();root.replaceChildren(scores,tap,msg);bestText.textContent="Personal best: "+(best?best+" ms":"—");msg.textContent="Try five rounds as a practice set; you can continue after that.";
  function clicked(){if(state==="ready"||state==="done"){clearTimeout(timeout);tap.className="reaction-button wait";tap.textContent="Wait for green…";state="waiting";msg.textContent="Stay focused…";timeout=setTimeout(()=>{state="go";began=performance.now();tap.className="reaction-button go";tap.textContent="CLICK NOW!"},1200+Math.random()*2400)}
  else if(state==="waiting"){clearTimeout(timeout);state="done";tap.className="reaction-button ready";tap.textContent="Too early! Try again";msg.textContent="False start. Wait for the green screen."}
  else if(state==="go"){const ms=Math.round(performance.now()-began);state="done";trials.push(ms);tap.className="reaction-button ready";tap.textContent=ms+" ms — Go again";if(!best||ms<best){best=ms;persist("cmw-reaction-best",best)}bestText.textContent="Personal best: "+best+" ms";average.textContent="Average: "+Math.round(trials.reduce((a,b)=>a+b,0)/trials.length)+" ms";msg.textContent=trials.length+" reactions completed. Keep practicing!"}}

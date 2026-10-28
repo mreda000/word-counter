@@ -1,5 +1,15 @@
 # AdSense and privacy release checklist
 
+## October 28 remediation
+
+- ChickenTask was rejected for Low value content, while ads.txt was Authorized and Policy center reported No current issues. Approval remains a Google review decision.
+- Created responsive bottom Display unit `4877112993`; retained fixed 160x600 sidebar unit `4311141403`. Manual layout keeps its existing 160px clearance and fullscreen/pointer-lock protections.
+- Added original instructions, scoring examples, practice routines and limitations to six game pages. Corrected the reaction game's misleading five-round-limit copy.
+- All 34 public HTML pages load `privacy.js` synchronously before any advertising loader. It sets consent defaults before tags. Optional GA4 is not downloaded until an explicit analytics opt-in; consent can be withdrawn through the footer and expires after 180 days. Advertising consent remains owned by Google's CMP, separately from analytics.
+- Updated privacy disclosures to describe those actual choices. The analytics panel is not a replacement for a certified advertising CMP.
+- Local Chromium tests use blocked external resources and mocked ad responses. They verify no GA4 request before opt-in, load-once behavior, withdrawal across reload, expiry, bootstrap order, placement unit IDs, clearance and overflow at 390, 820, 1500, 2050 and 2560px.
+- Before requesting a new site review: verify the deployed guides and privacy files, published ChickenTask regional messages, and regional behavior. Do not check the fixed-issues declaration on an unchanged deployment.
+
 The changes in this branch reduce known code-level risks but do not certify compliance or approval.
 
 ## Required account checks (not verifiable from GitHub)
@@ -22,3 +32,4 @@ Official references:
 - https://support.google.com/adsense/answer/2768340
 - https://support.google.com/adsense/answer/13554116
 - https://support.google.com/adsense/answer/16053245
+

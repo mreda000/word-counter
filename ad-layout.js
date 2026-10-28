@@ -10,17 +10,17 @@
   if (!main || excluded.has(path) || /^\/(private|vendor|tests)(\/|$)/.test(path)
       || document.querySelector('#accountForm, [data-ads="off"]')) return;
 
-  // Preserve the existing account and ad unit. Verify this unit is a responsive
-  // Display unit in AdSense; the site-wide loader does not establish that fact.
+  // Separate account-verified fixed sidebar and responsive bottom Display units.
   const CLIENT = 'ca-pub-4432960986920022';
-  const SLOT = '4311141403';
+  const SIDE_SLOT = '4311141403';
+  const BOTTOM_SLOT = '4877112993';
   const EDGE = 16, RAIL_WIDTH = 162, RAIL_HEIGHT = 630, GAP = 160;
   const placements = [];
   let scheduled = false;
 
   const css = document.createElement('link');
   css.rel = 'stylesheet';
-  css.href = '/ad-layout.css?v=20261024';
+  css.href = '/ad-layout.css?v=20261028';
   css.dataset.ctAdStyles = '';
   css.onload = start;
   css.onerror = () => console.warn('ChickenTask ads: layout stylesheet did not load; no manual ads requested.');
@@ -112,7 +112,7 @@
     p.ad = ad;
     ad.className = 'adsbygoogle';
     ad.dataset.adClient = CLIENT;
-    ad.dataset.adSlot = SLOT;
+    ad.dataset.adSlot = p.position === 'bottom' ? BOTTOM_SLOT : SIDE_SLOT;
     if (p.position === 'bottom') {
       ad.style.display = 'block';
       ad.dataset.adFormat = 'auto';
@@ -138,3 +138,4 @@
     }
   }
 })();
+
