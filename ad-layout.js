@@ -15,8 +15,12 @@
   const SIDE_SLOT = '4311141403';
   const BOTTOM_SLOT = '4877112993';
   const EDGE = 16, RAIL_WIDTH = 162, RAIL_HEIGHT = 630, GAP = 160;
+  // Match ad-layout.css: outer width min(100% - 32px, 970px), then
+  // two 1px panel borders and two 8px horizontal padding areas.
+  const BOTTOM_MAX_WIDTH = 970, BOTTOM_GUTTER = 32, BOTTOM_INSET = 18;
   const placements = [];
   let scheduled = false;
+  let resize;
 
   const css = document.createElement('link');
   css.rel = 'stylesheet';
@@ -45,7 +49,7 @@
     const bottom = createPlacement('bottom');
     main.insertAdjacentElement('afterend', bottom.outer);
     placements.push(bottom);
-    const resize = new ResizeObserver(schedule);
+    resize = new ResizeObserver(schedule);
     resize.observe(main);
     resize.observe(bottom.panel);
     window.addEventListener('resize', schedule, {passive: true});
@@ -73,7 +77,8 @@
     slot.className = 'ct-ad-slot';
     panel.append(label, slot);
     outer.append(panel);
-    return {outer, panel, slot, position, requested: false, unfilled: false, ad: null};
+    return {outer, panel, slot, position, requested: false, unfilled: false,
+      ad: null, renderedWidth: 0};
   }
 
   function schedule() {
@@ -94,13 +99,38 @@
     const top = Math.max(0, rect.top + window.scrollY) + 24;
     for (const p of placements) {
       const isBottom = p.position === 'bottom';
-      p.outer.hidden = p.unfilled || (!isBottom && !sidesFit);
+      const available = Math.max(0, Math.min(viewport - BOTTOM_GUTTER, BOTTOM_MAX_WIDTH) - BOTTOM_INSET);
+      if (isBottom) rememberBottomWidth(p);
+      setHidden(p, p.unfilled || (isBottom ? p.renderedWidth > available + 1 : !sidesFit));
       if (!isBottom) p.outer.style.top = top + 'px';
       // Bottom is independent of side rails and remains eligible at every
-      // viewport width. At <=200px there is no supported minimum ad width.
+      // initial viewport width with room for a supported minimum ad width.
+      // A previously rendered creative can retain its width after a resize.
+      // Hide that entire placement until it fits again; never clip or refresh it.
       const width = p.slot.getBoundingClientRect().width;
       if (!p.outer.hidden && width >= (isBottom ? 200 : 160)) requestAd(p);
+      if (isBottom && !p.outer.hidden) {
+        // Also check a just-restored or synchronously rendered unit. Hidden
+        // measurements are zero, so retain the last visible required width.
+        rememberBottomWidth(p);
+        if (p.renderedWidth > available + 1) setHidden(p, true);
+      }
     }
+  }
+
+  function setHidden(p, hidden) {
+    if (p.outer.hidden !== hidden) p.outer.hidden = hidden;
+  }
+
+  function rememberBottomWidth(p) {
+    if (!p.ad || p.outer.hidden) return;
+    const frames = p.ad.querySelectorAll('iframe');
+    if (!frames.length && p.ad.dataset.adStatus !== 'filled') return;
+    // Only inspect the parent-page ad elements, never cross into an iframe.
+    // scrollWidth includes a fixed Google host that overflows a fluid <ins>.
+    let width = Math.max(p.ad.getBoundingClientRect().width, p.ad.scrollWidth);
+    for (const frame of frames) width = Math.max(width, frame.getBoundingClientRect().width);
+    if (Number.isFinite(width) && width > 0) p.renderedWidth = width;
   }
 
   function requestAd(p) {
@@ -122,14 +152,21 @@
       ad.style.cssText = 'display:inline-block;width:160px;height:600px';
     }
     p.slot.append(ad);
+    if (p.position === 'bottom') resize.observe(ad);
     const observer = new MutationObserver(() => {
       if (ad.dataset.adStatus === 'unfilled') {
         p.unfilled = true;
-        p.outer.hidden = true;
+        setHidden(p, true);
         observer.disconnect();
+        if (p.position === 'bottom') resize.unobserve(ad);
+        return;
       }
+      if (p.position === 'bottom') schedule();
     });
-    observer.observe(ad, {attributes: true, attributeFilter: ['data-ad-status']});
+    observer.observe(ad, p.position === 'bottom'
+      ? {attributes: true, childList: true, subtree: true,
+        attributeFilter: ['data-ad-status', 'style', 'width', 'height', 'class']}
+      : {attributes: true, attributeFilter: ['data-ad-status']});
     try {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
     } catch (error) {
