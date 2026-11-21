@@ -1,0 +1,10 @@
+# Standard legacy arcade links now point to the full game pages.
+# Exact query matching and forced redirects are documented at:
+# https://docs.netlify.com/manage/routing/redirects/redirect-options/
+# Keep the fallback arcade.html for extra query parameters and non-Netlify hosts.
+/arcade game=scramble /word-scramble 301!
+/arcade game=daily /daily-word 301!
+/arcade game=reaction /reaction-time 301!
+/arcade.html game=scramble /word-scramble 301!
+/arcade.html game=daily /daily-word 301!
+/arcade.html game=reaction /reaction-time 301!

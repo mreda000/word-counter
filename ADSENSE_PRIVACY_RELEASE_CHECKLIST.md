@@ -1,5 +1,14 @@
 # AdSense and privacy release checklist
 
+## November 21 content remediation
+
+- Replaced six older writing articles with distinct, original worked guides tied to the actual word counter. Removed unsupported word-count/SEO claims and unverified first-person stories. Updated the guide index, About page, general instructions, FAQ, homepage and tools hub to describe the current product and useful workflows.
+- Added two explicit, editable word-counter examples, precise measurement rules, calculation limits and troubleshooting. Restored the missing shared site script on that page, including its existing manual side/bottom ad initialization and consent-gated analytics. Removed duplicate theme/particle setup and corrected duration rounding at minute boundaries.
+- Preserved the existing manual ad unit IDs and layout protections. Replaced the obsolete arcade wrapper with standard legacy-link redirects and a noindex, ad-free fallback that only sends visitors to the complete game pages. Removed the obsolete wrapper from the sitemap; the real game pages and their ads remain.
+- Four Node suites passed, including actual-analyzer examples, draft replacement/cancellation, shared theme/ad initialization, calculation boundaries and saved-progress behavior. Changed HTML passed structure, unique ID, local link/anchor and JSON-LD checks. No new third-party packages or external artwork were introduced.
+- The existing Chromium suites could not launch in the editing environment (`socket() failed: Operation not permitted`); this is not a passing visual test. Verify mobile/tablet/desktop rendering and real ad behavior separately. Repository changes alone do not establish a successful production deployment.
+- These fixes address identified source/content issues, not a blanket copyright, security or policy clearance. Account-side CMP publication, Auto ads and the site's current approval state still need direct account evidence. Do not describe the site as approved unless AdSense > Sites shows Ready for chickentask.com.
+
 ## October 28 remediation
 
 - ChickenTask was rejected for Low value content, while ads.txt was Authorized and Policy center reported No current issues. Approval remains a Google review decision.

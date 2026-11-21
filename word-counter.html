@@ -28,9 +28,11 @@
 .ambient{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;isolation:isolate}
 .ambient-dot{position:absolute;bottom:-24px;width:var(--size);height:var(--size);left:var(--x);border-radius:50%;background:var(--blue);opacity:0;box-shadow:0 0 14px 2px color-mix(in srgb,var(--blue) 30%,transparent);animation:ambient-rise var(--duration) linear var(--delay) infinite}
 body>header,body>main,body>footer{position:relative;z-index:1}
-@keyframes ambient-rise{0%{transform:translate3d(0,0,0);opacity:0}12%{opacity:.20}75%{opacity:.16}100%{transform:translate3d(var(--drift),-110vh,0);opacity:0}}
+@keyframes ambient-rise{0%{transform:translate3d(0,0,0);opacity:0}12%{opacity:.20}75%{opacity:.16}100%{transform:translate3d(var(--drift,0px),-110vh,0);opacity:0}}
 :root[data-theme="dark"] .ambient-dot{opacity:0;box-shadow:0 0 16px 3px color-mix(in srgb,var(--blue) 40%,transparent)}
-@media(prefers-reduced-motion:reduce){.ambient-dot{animation:none;opacity:.10;bottom:auto;top:var(--y)}}
+@media(prefers-reduced-motion:reduce){.ambient-dot{animation:none;opacity:.10;bottom:auto;top:var(--y,var(--x,50%))}}
+.content-guide{max-width:860px;overflow-wrap:anywhere}.content-guide h2{margin-top:2rem;line-height:1.25}.content-guide h3{margin:1.5rem 0 .5rem;line-height:1.3}.content-guide p,.content-guide li,.content-guide dd{color:var(--muted)}.content-guide a{color:var(--blue);text-underline-offset:.18em}.content-guide li+li{margin-top:.5rem}.content-guide dt{font-weight:750;margin-top:1rem}.content-guide dd{margin:.35rem 0 0}.content-guide pre{white-space:pre-wrap;word-break:normal;background:var(--input);border:1px solid var(--line);border-radius:12px;padding:16px;font:inherit}.content-guide code{font-size:.95em}.content-guide .example-card{border:1px solid var(--line);background:var(--surface);border-radius:18px;padding:20px;margin:1rem 0}.content-guide .example-card h3{margin-top:0}.content-guide .example-results{font-size:.9rem}.guide-links{display:flex;flex-wrap:wrap;gap:.5rem 1rem;padding:0;list-style:none}.content-guide .guide-links li{margin:0}.content-guide details{border-top:1px solid var(--line);padding:14px 0}.content-guide summary{cursor:pointer;font-weight:700}.content-guide summary:focus-visible{outline:3px solid var(--blue);outline-offset:4px}.content-guide section{scroll-margin-top:24px}.account-nav-link{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:9px 14px;border-radius:12px;background:#f3b341;color:#29210f;font-size:.86rem;font-weight:800;text-decoration:none;white-space:nowrap}.account-nav-link:hover{background:#ffd278}.nav-actions{flex-wrap:wrap}.example-load{max-width:100%;white-space:normal;text-align:left}
+.privacy-link{font:inherit;color:inherit;background:none;border:0;padding:0;margin-left:14px;text-decoration:underline;cursor:pointer}.privacy-dialog{box-sizing:border-box;width:min(620px,calc(100% - 32px));max-height:85vh;overflow:auto;border:1px solid var(--line);border-radius:16px;background:var(--surface);color:var(--text);padding:24px;line-height:1.6}.privacy-dialog::backdrop{background:rgba(0,0,0,.6)}.privacy-dialog button{font:inherit;padding:10px 14px;border:1px solid var(--line);border-radius:9px;background:var(--input);color:var(--text);cursor:pointer;max-width:100%;white-space:normal}.privacy-actions{display:flex;gap:10px;flex-wrap:wrap}@media(max-width:540px){.privacy-link{margin-left:0;margin-right:14px}}
 
 </style>
 <script>try{document.documentElement.dataset.theme=localStorage.getItem("cmw-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}catch(e){document.documentElement.dataset.theme="light"}</script>
@@ -40,29 +42,74 @@ body>header,body>main,body>footer{position:relative;z-index:1}
 </head>
 <body>
 <div class="ambient" id="ambient" aria-hidden="true"></div>
-<script>
-(function(){
- const layer=document.getElementById("ambient");
- const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
- // Fixed positions avoid a shifting layout and reduce paint work.
- for(let i=0;i<24;i++){
-   const dot=document.createElement("span");dot.className="ambient-dot";
-   const x=(i*47.13+11)%100, y=(i*29.7+17)%100;
-   dot.style.setProperty("--x",x+"%");
-   dot.style.setProperty("--y",y+"%");
-   dot.style.setProperty("--size",(i%4+2)+"px");
-   dot.style.setProperty("--duration",(17+i%11)+"s");
-   dot.style.setProperty("--delay",(-i*1.9)+"s");
-   dot.style.setProperty("--drift",((i%7)-3)*16+"px");
-   layer.appendChild(dot);
- }
-})();
-</script>
 <header google-side-rail-overlap="false" class="site-header"><nav class="shell nav" aria-label="Main navigation"><a class="brand" href="/">🐔 Chicken<span>Task</span>.</a><div class="nav-actions"><div class="nav-links"><a href="/">Home</a><a href="/games">Games</a><a href="/tools">Tools</a><a href="/blog">Blog</a><a href="/how-to-use">How to use</a><a href="/faq">FAQ</a></div><button type="button" class="theme-button" id="themeToggle" aria-label="Toggle dark and light mode">Toggle theme</button></div></nav></header>
 <main google-side-rail-overlap="false" class="shell"><section class="hero"><div class="eyebrow">Free writing & productivity tool</div><h1>Word Counter & Text Analyzer.</h1><p>Paste your writing and instantly see word counts, reading level, speaking time and more. Simple, fast and free.</p></section>
 <div class="workspace"><section class="panel" aria-labelledby="editorHeading"><h2 id="editorHeading">Your text</h2><label class="field-label" for="urlInput">Analyze text from a webpage</label><div class="url-row"><input id="urlInput" type="url" inputmode="url" placeholder="https://example.com/article" autocomplete="url"><button type="button" class="primary" id="fetchBtn">Fetch &amp; Analyze</button></div><label class="field-label" for="textInput">Write or paste text</label><textarea id="textInput" placeholder="Start typing or paste your text here..." spellcheck="true"></textarea><div class="buttons"><button type="button" class="primary" id="copyBtn">Copy results</button><button type="button" class="secondary" id="clearBtn">Clear text</button></div><p id="status" class="status" role="status" aria-live="polite"></p></section>
 <section class="panel" aria-labelledby="resultsHeading"><h2 id="resultsHeading">Live analysis</h2><div class="stats" aria-live="off"><div class="stat"><span class="stat-label">Words</span><strong class="stat-value" id="wordCount">0</strong></div><div class="stat"><span class="stat-label">Characters</span><strong class="stat-value" id="charCount">0</strong></div><div class="stat"><span class="stat-label">Numbers</span><strong class="stat-value" id="numberCount">0</strong></div><div class="stat"><span class="stat-label">Sentences</span><strong class="stat-value" id="sentenceCount">0</strong></div><div class="stat"><span class="stat-label">Paragraphs</span><strong class="stat-value" id="paragraphCount">0</strong></div><div class="stat"><span class="stat-label">Reading time</span><strong class="stat-value" id="readingTime">0 sec</strong></div><div class="stat"><span class="stat-label">Speaking time</span><strong class="stat-value" id="speakingTime">0 sec</strong></div><div class="stat wide"><span class="stat-label">Estimated reading grade (English)</span><strong class="stat-value" id="readingLevel">N/A</strong></div></div><p class="hint">Estimates are approximate. Reading time uses 200 words/minute; speaking time uses 130 words/minute.</p></section></div>
-<section class="details"><h2>A clearer picture of your writing.</h2><p>ChickenTask helps students, writers and professionals check length and readability without installing anything. Your typed text is analyzed in your browser. URL fetching depends on whether the source website permits browser access.</p></section></main>
+<article class="details content-guide" aria-labelledby="guideHeading">
+<h2 id="guideHeading">Check your draft, then decide what to change.</h2>
+<p>Use the counter to check an assignment limit, prepare a speech, or compare two drafts. Paste the text you want to measure, edit it in the box, and watch the results update. <strong>Copy results</strong> copies the measurements, not your writing. Keep a separate copy of your draft before leaving this page.</p>
+<nav aria-label="Word counter guide"><ul class="guide-links"><li><a href="#worked-examples">Try an example</a></li><li><a href="#counting-rules">Counting rules</a></li><li><a href="#reading-and-speaking">Time and reading grade</a></li><li><a href="#webpage-help">Webpage help</a></li><li><a href="#text-privacy">Your text</a></li></ul></nav>
+
+<section id="worked-examples" aria-labelledby="examplesHeading">
+<h2 id="examplesHeading">Two examples you can edit</h2>
+<p>Each example has a known result. Load one into the editor, change a word or a line break, and see which measurements change. If you already have text in the editor, you will be asked before replacing it.</p>
+<div class="example-card">
+<h3>A short writing exercise</h3>
+<pre id="sampleDraft">Keep the first draft clear and simple.
+Then read it aloud, remove repeated ideas, and check the final word count.</pre>
+<p class="example-results"><strong>Expected:</strong> 20 words, 113 characters, 0 number groups, 2 sentences, and 2 paragraphs. Reading time: 6 seconds. Speaking time: 9 seconds. Estimated English reading grade: 4.</p>
+<button type="button" class="secondary example-load" data-sample="sampleDraft">Load this 20-word example into the editor</button>
+<p>Try removing <em>first</em> and <em>final</em>. The draft becomes 18 words without changing its two sentence segments. Consider whether those words add useful meaning before deciding to cut them.</p>
+</div>
+<div class="example-card">
+<h3>Numbers, hyphens, and line breaks</h3>
+<pre id="sampleRules">We saved 12 files.
+
+The well-tested tool doesn't upload them.</pre>
+<p class="example-results"><strong>Expected:</strong> 10 words, 61 characters, 1 number group, 2 sentences, and 2 paragraphs. Reading time: 3 seconds. Speaking time: 5 seconds. Estimated English reading grade: 5.</p>
+<button type="button" class="secondary example-load" data-sample="sampleRules">Load this 10-word example into the editor</button>
+<p><em>Well-tested</em> and <em>doesn't</em> each count as one word here. Replacing the blank line with one line break keeps the paragraph count at two but reduces the character count by one.</p>
+</div>
+</section>
+
+<section id="counting-rules" aria-labelledby="rulesHeading">
+<h2 id="rulesHeading">Exactly what the counters measure</h2>
+<p>Different writing apps can use different counting rules. If a school, employer, or submission form sets a strict limit, check the final text in that system too.</p>
+<dl>
+<dt>Words</dt><dd>One word is one nonempty group separated by spaces, tabs, or line breaks. Numbers and standalone punctuation can count as words. Hyphenated words and contractions stay together. Languages normally written without spaces will not be segmented into individual words by this counter.</dd>
+<dt>Characters</dt><dd>The count includes spaces, tabs, punctuation, and line breaks, including whitespace at the start and end. It measures JavaScript text units (UTF-16), so an emoji or a combined character can contribute more than one unit. This is not a universal count of visible symbols.</dd>
+<dt>Numbers</dt><dd>This counts groups of digits with word boundaries, rather than mathematical values. <code>12</code> counts as one group; <code>3.5</code> and <code>1,000</code> each count as two. <code>2nd</code> does not count because letters touch the digits. A minus sign is not part of the number group.</dd>
+<dt>Sentences</dt><dd>Periods, question marks, and exclamation marks split the text into nonempty segments. A final segment without punctuation still counts. Abbreviations and decimal points can split a sentence unexpectedly; this is a simple estimate, not a grammar parser.</dd>
+<dt>Paragraphs</dt><dd>Each nonempty line counts as a paragraph, whether there is one line break or several between lines. A line wrapping visually inside the editor does not add a paragraph. Text copied with a hard line break after every line may therefore show more paragraphs than your source document.</dd>
+</dl>
+<p>For a step-by-step interpretation of a result, see <a href="/blog-analyze-text">how to analyze a draft</a>. For an editing exercise, see <a href="/blog-cut-words">cut words while keeping the meaning</a>.</p>
+</section>
+
+<section id="reading-and-speaking" aria-labelledby="estimatesHeading">
+<h2 id="estimatesHeading">Use time and reading grade as estimates</h2>
+<h3>Reading and speaking time</h3>
+<p>Reading time is <strong>words ÷ 200 × 60 seconds</strong>. Speaking time is <strong>words ÷ 130 × 60 seconds</strong>. Durations are rounded to the nearest second; a nonempty draft displays at least one second. These are fixed planning assumptions, not a measurement of your own pace.</p>
+<p>A 390-word speech gives an estimated speaking time of 3 minutes at 130 words per minute. Pauses, slide changes, audience reactions, and emphasis can make the real delivery longer. Read your own draft aloud with a timer before relying on a limit. The <a href="/blog-speaking-time">speech timing guide</a> shows how to budget for pauses.</p>
+<h3>Estimated English reading grade</h3>
+<p>The score uses this calculation: <code>0.39 × words per sentence + 11.8 × syllables per word − 15.59</code>. For this estimate, the tool keeps tokens containing English A–Z letters and approximates syllables from vowel groups, with a simple final-e adjustment. The result is rounded to a whole number and values below zero display as zero.</p>
+<p>This approximation can miscount names, abbreviations, technical terms, and non-English text. Very short samples can produce unstable scores. A lower number does not prove that an explanation is clear, and the score does not assess accuracy, tone, accessibility, or suitability for a particular reader. Use <a href="/blog-reading-level">the reading-level editing example</a> to compare a revision, then read it yourself.</p>
+</section>
+
+<section id="webpage-help" aria-labelledby="fetchHeading">
+<h2 id="fetchHeading">When “Fetch &amp; Analyze” works—and when to paste instead</h2>
+<p>Enter a complete <code>https://</code> or <code>http://</code> address. Your browser requests that page directly. The tool accepts HTML or plain text; for HTML it removes common navigation, header, footer, script, and style elements, then uses a main or article area when available. HTML whitespace is collapsed, so fetched paragraph counts may differ from the visible article.</p>
+<details><summary>Why does a public webpage fail to load?</summary><p>Many websites do not allow another website to read their pages through a browser request (CORS). A link opening normally in a new tab does not mean this tool can fetch it. Copy the article text and paste it into the editor instead. This feature does not bypass paywalls or sign-in requirements.</p></details>
+<details><summary>Why is the imported text incomplete or different?</summary><p>Some pages build their content with JavaScript after loading. This tool analyzes the returned HTML; it does not run the source page's scripts or reconstruct its visual layout. Menus, captions, or unrelated text may still be included. Review and edit the imported text before using its count.</p></details>
+<details><summary>Can I analyze a PDF or an image URL?</summary><p>The URL field does not extract text from PDFs or images. Copy selectable text from a document into the editor. For an image of printed English text, try <a href="/image-to-text">Image to Text</a>, proofread the recognition result, then send it to this counter. See <a href="/blog-fetch-url">the webpage import guide</a> for more examples.</p></details>
+</section>
+
+<section id="text-privacy" aria-labelledby="privacyHeading">
+<h2 id="privacyHeading">What happens to your text</h2>
+<p>Counting and analysis run in your browser; the analyzer does not upload your draft to a ChickenTask server. The editor does not intentionally save drafts, and clearing the editor removes its current contents. If you arrive from Image to Text, its transfer uses this tab's session storage and the transfer item is removed after it is read.</p>
+<p>Fetching a URL contacts the website you entered. Advertising, sign-in, and optional analytics have separate data practices explained in the <a href="/Privacy">Privacy Policy</a>. Avoid putting sensitive information into a public webpage URL.</p>
+</section>
+</article></main>
 <footer google-side-rail-overlap="false" class="footer"><div class="shell footer-inner"><span>© <span id="year"></span> ChickenTask.com</span><div><a href="/About">About</a><a href="/Privacy">Privacy</a></div></div></footer>
 <script>
 "use strict";
@@ -70,7 +117,7 @@ const $=id=>document.getElementById(id);
 const editor=$("textInput"),status=$("status");
 const setStatus=message=>{status.textContent=message};
 function countSyllables(word){const cleaned=word.toLowerCase().replace(/[^a-z]/g,"");if(!cleaned)return 0;const groups=cleaned.replace(/e$/,"").match(/[aeiouy]+/g);return Math.max(1,groups?groups.length:1)}
-function formatDuration(seconds){if(!seconds)return "0 sec";if(seconds<60)return Math.max(1,Math.round(seconds))+" sec";const minutes=Math.floor(seconds/60),remaining=Math.round(seconds%60);return remaining?minutes+" min "+remaining+" sec":minutes+" min"}
+function formatDuration(seconds){if(!seconds)return "0 sec";const total=Math.max(1,Math.round(seconds));if(total<60)return total+" sec";const minutes=Math.floor(total/60),remaining=total%60;return remaining?minutes+" min "+remaining+" sec":minutes+" min"}
 function analyzeText(){
  const text=editor.value,words=text.trim()?text.trim().split(/\s+/):[];
  const numbers=text.match(/\b\d+\b/g)||[];
@@ -91,8 +138,8 @@ async function fetchTextFromURL(){
  finally{btn.disabled=false;btn.textContent="Fetch & Analyze"}
 }
 async function copyResults(){const labels=[["Words","wordCount"],["Numbers","numberCount"],["Characters","charCount"],["Sentences","sentenceCount"],["Paragraphs","paragraphCount"],["Reading grade","readingLevel"],["Reading time","readingTime"],["Speaking time","speakingTime"]];const result=labels.map(([label,id])=>label+": "+$(id).textContent).join("\n");try{await navigator.clipboard.writeText(result);setStatus("Results copied to clipboard.")}catch(e){setStatus("Copy failed. Please check clipboard permissions.")}}
-function toggleDarkMode(){const next=document.documentElement.dataset.theme==="dark"?"light":"dark";document.documentElement.dataset.theme=next;try{localStorage.setItem("cmw-theme",next)}catch(e){}updateThemeButton()}
-function updateThemeButton(){$("themeToggle").textContent=document.documentElement.dataset.theme==="dark"?"☀ Light mode":"☾ Dark mode"}
-editor.addEventListener("input",analyzeText);$("fetchBtn").addEventListener("click",fetchTextFromURL);$("copyBtn").addEventListener("click",copyResults);$("clearBtn").addEventListener("click",()=>{editor.value="";analyzeText();setStatus("Text cleared.");editor.focus()});$("themeToggle").addEventListener("click",toggleDarkMode);$("year").textContent=new Date().getFullYear();updateThemeButton();analyzeText();
+function loadExample(button){const sample=$(button.dataset.sample);if(!sample)return;if(editor.value&&!window.confirm("Replace the text in the editor with this example? Copy your draft first if you want to keep it."))return;editor.value=sample.textContent;analyzeText();setStatus("Example loaded. Edit it to see the measurements change.");editor.focus();editor.scrollIntoView({block:"center",behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})}
+editor.addEventListener("input",analyzeText);$("fetchBtn").addEventListener("click",fetchTextFromURL);$("copyBtn").addEventListener("click",copyResults);$("clearBtn").addEventListener("click",()=>{editor.value="";analyzeText();setStatus("Text cleared.");editor.focus()});document.querySelectorAll("[data-sample]").forEach(button=>button.addEventListener("click",()=>loadExample(button)));analyzeText();
 </script>
+<script src="/site.js" defer></script>
 <script type="module">if(new URLSearchParams(location.search).get('source')==='image-to-text'){try{const text=sessionStorage.getItem('ct-ocr-transfer');sessionStorage.removeItem('ct-ocr-transfer');if(text!==null){const input=document.getElementById('textInput');input.value=text;input.dispatchEvent(new Event('input',{bubbles:true}));}}catch{}}</script></body></html>

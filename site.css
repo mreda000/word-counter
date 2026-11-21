@@ -49,3 +49,33 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}body{overflow-x:clip}bu
 .game-guide{margin-top:28px;text-align:left;line-height:1.7}
 .game-guide h2{margin-top:0}.game-guide h3{margin-top:24px}.game-guide li+li{margin-top:8px}
 
+/* Practical guides: readable examples and tables without widening the page. */
+.content-guide{overflow-wrap:anywhere;min-width:0}
+.content-guide h2,.content-guide h3{color:var(--text);line-height:1.3;scroll-margin-top:24px}
+.content-guide h3{font-size:1.13rem;margin:26px 0 10px}
+.content-guide p,.content-guide li{color:var(--muted)}
+.content-guide strong{color:var(--text)}
+.content-guide li+li{margin-top:9px}
+.content-guide ol,.content-guide ul{padding-left:1.4em}
+.content-guide a{text-underline-offset:3px}
+.content-guide a:focus-visible,.content-guide summary:focus-visible,.table-scroll:focus-visible,.guide-jumps a:focus-visible{outline:3px solid var(--blue);outline-offset:4px}
+.content-guide blockquote,.content-guide pre{margin:20px 0;padding:16px 18px;background:var(--input);border:1px solid var(--line);border-radius:12px;color:var(--text)}
+.content-guide blockquote{border-left:4px solid var(--blue)}
+.content-guide blockquote p:first-child{margin-top:0}.content-guide blockquote p:last-child{margin-bottom:0}
+.content-guide pre{white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%;font:inherit}
+.content-guide code{font-size:.93em;overflow-wrap:anywhere}
+.content-meta{font-size:.88rem;color:var(--muted);margin:14px 0 24px}
+.table-scroll{max-width:100%;overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:12px;overscroll-behavior-x:contain}
+.content-guide table{width:100%;border-collapse:collapse;text-align:left;font-size:.92rem}
+.content-guide th,.content-guide td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.content-guide th{background:var(--input);color:var(--text)}
+.content-guide tbody tr:last-child td{border-bottom:0}
+.guide-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.guide-grid>section{min-width:0;border:1px solid var(--line);border-radius:16px;padding:20px;background:var(--surface)}
+.guide-grid>section h3{margin-top:0}
+.guide-jumps{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 18px;margin:0 auto 28px;max-width:950px;padding:0 12px}
+.guide-jumps a{min-height:44px;display:inline-flex;align-items:center;padding:5px 0;text-underline-offset:3px}
+.home-workflows{padding-top:38px;padding-bottom:38px}
+.home-workflows h2{font-size:clamp(1.6rem,3vw,2.5rem);letter-spacing:-.04em;margin:10px 0 24px}
+@media(max-width:680px){.guide-grid{grid-template-columns:1fr;gap:16px}.guide-grid>section{padding:18px}.content-guide th,.content-guide td{padding:10px;font-size:.9rem}.content-guide blockquote,.content-guide pre{padding:14px}.guide-jumps{justify-content:flex-start}}
+
