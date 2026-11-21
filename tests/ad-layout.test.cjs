@@ -10,7 +10,7 @@ const path = require('node:path');
 const vm = require('node:vm');
 const source = fs.readFileSync(path.resolve(__dirname, '../ad-layout.js'), 'utf8');
 
-function fixture(initialViewport, fillImmediately = true) {
+function fixture(initialViewport, fillImmediately = true, scrollbar = {}) {
   let viewport = initialViewport;
   const frames = [], resizes = [], mutations = [], requests = [];
   const windowEvents = new Map(), documentEvents = new Map();
@@ -20,7 +20,12 @@ function fixture(initialViewport, fillImmediately = true) {
   function descendant(node, ancestor) { for (let n = node; n; n = n.parent) if (n === ancestor) return true; return false; }
   function hidden(node) { for (let n = node; n; n = n.parent) if (n.hidden) return true; return false; }
   function placement(node) { for (let n = node; n; n = n.parent) if (n.dataset.ctAdPosition) return n; return null; }
-  function slotWidth() { return Math.max(0, Math.min(viewport - 32, 970) - 18); }
+  function clientWidth() {
+    const bottom = body && body.children.find(node => node.dataset.ctAdPosition === 'bottom');
+    const needsSpace = bottom && !bottom.hidden && (!scrollbar.needsCreative || bottom.querySelectorAll('iframe').length);
+    return viewport - (needsSpace ? scrollbar.width || 0 : 0);
+  }
+  function slotWidth() { return Math.max(0, Math.min(clientWidth() - 32, 970) - 18); }
   function rect(left, width, height = 100, top = 0) { return {left, right: left + width, top, bottom: top + height, width, height}; }
 
   class Element {
@@ -45,10 +50,10 @@ function fixture(initialViewport, fillImmediately = true) {
     }
     getBoundingClientRect() {
       if (hidden(this)) return rect(0, 0, 0);
-      if (this === main) { const width = Math.min(1120, viewport - 40); return rect((viewport - width) / 2, width, 900, 72); }
+      if (this === main) { const width = Math.min(1120, clientWidth() - 40); return rect((clientWidth() - width) / 2, width, 900, 72); }
       const outer = placement(this), bottom = outer && outer.dataset.ctAdPosition === 'bottom';
       if (bottom) {
-        const outerWidth = Math.min(viewport - 32, 970), left = (viewport - outerWidth) / 2;
+        const outerWidth = Math.min(clientWidth() - 32, 970), left = (clientWidth() - outerWidth) / 2;
         if (this === outer || this.className === 'ct-ad-panel') return rect(left, outerWidth, 220, 972);
         return rect(left + 9, this.creativeWidth || slotWidth(), 100, 1160);
       }
@@ -63,12 +68,12 @@ function fixture(initialViewport, fillImmediately = true) {
   const document = {
     hidden: false, fullscreenElement: null, pointerLockElement: null, body, head,
     documentElement: {
-      get clientWidth() { return viewport; },
+      get clientWidth() { return clientWidth(); },
       get scrollWidth() {
         const bottom = body.children.find(node => node.dataset.ctAdPosition === 'bottom');
-        if (!bottom || bottom.hidden) return viewport;
+        if (!bottom || bottom.hidden) return clientWidth();
         const slot = bottom.children[0].children[1];
-        return Math.max(viewport, slot.getBoundingClientRect().left + slot.scrollWidth);
+        return Math.max(clientWidth(), slot.getBoundingClientRect().left + slot.scrollWidth);
       }
     },
     createElement: tag => new Element(tag),
@@ -101,6 +106,7 @@ function fixture(initialViewport, fillImmediately = true) {
   const context = {
     console, document, ResizeObserver, MutationObserver,
     location: {pathname: '/word-counter'}, scrollY: 0,
+    get innerWidth() { return viewport; },
     requestAnimationFrame(fn) { frames.push(fn); },
     addEventListener(name, fn) { on(windowEvents, name, fn); },
     adsbygoogle: {push() {
@@ -180,4 +186,39 @@ wide.ad.dataset.adStatus = 'filled'; wide.notify(wide.ad); wide.flush();
 assert.equal(wide.bottom.hidden, true); assert.equal(wide.requests.length, 1);
 assert.equal(wide.mutations.find(item => item.target === wide.ad).active, false);
 
-console.log('PASS: bottom-ad overflow, same-unit restore, mobile initial sizing, late rendering, unfilled collapse, and stable observer scheduling.');
+// Hiding an ad can remove its vertical scrollbar. A wider clientWidth must
+// not immediately restore the same ad and start a visible/hidden oscillation.
+const gutter = fixture(1040, true, {width: 15}); gutter.flush();
+assert.equal(gutter.document.documentElement.clientWidth, 1025);
+assert.equal(gutter.available(), 952);
+gutter.resize(1005);
+assert.equal(gutter.document.documentElement.clientWidth, 990);
+assert.equal(gutter.available(), 940);
+assert.ok(gutter.flush() <= 2);
+assert.equal(gutter.bottom.hidden, true);
+assert.equal(gutter.document.documentElement.clientWidth, 1005, 'scrollbar space is released by hiding');
+assert.equal(gutter.available(), 952, 'raw available width alone would incorrectly restore');
+for (let i = 0; i < 8; i++) { gutter.signalResize(); gutter.flush(); }
+assert.deepEqual(gutter.visibilityChanges, [true], 'retained actual gutter prevents repeated restoration');
+gutter.resize(1020); gutter.flush();
+assert.equal(gutter.bottom.hidden, false);
+assert.equal(gutter.document.documentElement.clientWidth, 1005, 'restoring reintroduces the scrollbar');
+assert.deepEqual(gutter.visibilityChanges, [true, false]);
+assert.equal(gutter.requests.length, 1);
+
+// An initially short page has no scrollbar until its creative arrives.
+// The newly observed gutter is retained even though hiding removes it again.
+const arrivingGutter = fixture(1005, false, {width: 15, needsCreative: true}); arrivingGutter.flush();
+assert.equal(arrivingGutter.document.documentElement.clientWidth, 1005);
+arrivingGutter.fill(arrivingGutter.ad, 952);
+assert.equal(arrivingGutter.document.documentElement.clientWidth, 990);
+assert.ok(arrivingGutter.flush() <= 2);
+assert.equal(arrivingGutter.bottom.hidden, true);
+assert.equal(arrivingGutter.document.documentElement.clientWidth, 1005);
+for (let i = 0; i < 8; i++) { arrivingGutter.signalResize(); arrivingGutter.flush(); }
+assert.deepEqual(arrivingGutter.visibilityChanges, [true]);
+arrivingGutter.resize(1020); arrivingGutter.flush();
+assert.equal(arrivingGutter.bottom.hidden, false);
+assert.equal(arrivingGutter.requests.length, 1);
+
+console.log('PASS: bottom-ad overflow, same-unit restore, mobile initial sizing, late rendering, unfilled collapse, and stable scheduling with dynamic scrollbar gutters.');

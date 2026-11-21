@@ -21,6 +21,7 @@
   const placements = [];
   let scheduled = false;
   let resize;
+  let scrollbarReserve = 0;
 
   const css = document.createElement('link');
   css.rel = 'stylesheet';
@@ -90,6 +91,14 @@
   function layout() {
     const rect = main.getBoundingClientRect();
     const viewport = document.documentElement.clientWidth;
+    const innerViewport = Number.isFinite(window.innerWidth) && window.innerWidth > 0
+      ? window.innerWidth : viewport;
+    // Hiding the bottom unit can remove a vertical scrollbar and widen
+    // clientWidth. Retain actual scrollbar space already observed so that
+    // this alone cannot make the unit restore, overflow, and hide in a loop.
+    scrollbarReserve = Math.max(scrollbarReserve, innerViewport - viewport);
+    const bottomViewport = Math.min(viewport, innerViewport - scrollbarReserve);
+    const available = Math.max(0, Math.min(bottomViewport - BOTTOM_GUTTER, BOTTOM_MAX_WIDTH) - BOTTOM_INSET);
     const blocked = !!document.fullscreenElement || !!document.pointerLockElement;
     // Measure actual content instead of an arbitrary screen breakpoint. The
     // entire main region, not just a game canvas, gets a 160px clearance.
@@ -99,7 +108,6 @@
     const top = Math.max(0, rect.top + window.scrollY) + 24;
     for (const p of placements) {
       const isBottom = p.position === 'bottom';
-      const available = Math.max(0, Math.min(viewport - BOTTOM_GUTTER, BOTTOM_MAX_WIDTH) - BOTTOM_INSET);
       if (isBottom) rememberBottomWidth(p);
       setHidden(p, p.unfilled || (isBottom ? p.renderedWidth > available + 1 : !sidesFit));
       if (!isBottom) p.outer.style.top = top + 'px';
